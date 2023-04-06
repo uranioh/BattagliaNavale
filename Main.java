@@ -8,11 +8,9 @@ public class Main {
                  IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+        SinglePlayer s= new SinglePlayer();
+        //MainMenu window = new MainMenu();
 
-        MainMenu window = new MainMenu();
 
-        window.setVisible(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.pack();
     }
 }

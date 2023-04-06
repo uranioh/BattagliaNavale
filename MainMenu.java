@@ -39,6 +39,10 @@ public class MainMenu extends JFrame implements ActionListener {
 
         c.add(top);
         c.add(bottom);
+
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
     }
 
     @Override
