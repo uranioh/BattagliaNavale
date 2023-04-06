@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class SinglePlayer extends JFrame {
     JLabel main_panel= new JLabel();
@@ -18,12 +19,38 @@ public class SinglePlayer extends JFrame {
         main_panel.setIcon(sfondo);
 
 
-
         for(int i=0; i<8; i++){
             String t="barche/barca"+(i)+".png";
             barca_img[i]= new ImageIcon(t);
             barca_pan[i]=new JLabel();
             barca_pan[i].setIcon(barca_img[i]);
+            final int v=i;
+            barca_pan[i].addMouseMotionListener(new MouseMotionAdapter() {
+
+                public void mouseDragged(MouseEvent e) {
+                    super.mouseDragged(e);
+                    int x = e.getX() + barca_pan[v].getX();
+                    int y = e.getY() + barca_pan[v].getY();
+                    int maxX = barca_pan[v].getParent().getWidth() - barca_pan[v].getWidth();
+                    int maxY = barca_pan[v].getParent().getHeight() - barca_pan[v].getHeight();
+                    x = Math.max(0, Math.min(x, maxX));
+                    y = Math.max(0, Math.min(y, maxY));
+                    barca_pan[v].setLocation(x, y);
+                }
+            });
+            barca_pan[v].addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    super.mousePressed(e);
+                    barca_pan[v].setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    super.mouseReleased(e);
+                    barca_pan[v].setCursor(Cursor.getDefaultCursor());
+                }
+            });
         }
 
         reset_boats_position();
