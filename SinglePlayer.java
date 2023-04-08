@@ -18,7 +18,22 @@ public class SinglePlayer extends JFrame {
         Container c= getContentPane();
         main_panel.setIcon(sfondo);
 
+        set_boats();
 
+        set_map_panel();
+
+
+
+
+
+        c.add(main_panel);
+        setSize(1773,898);
+        setResizable(false);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    public void set_boats(){
         for(int i=0; i<8; i++){
             String t="barche/barca"+(i)+".png";
             barca_img[i]= new ImageIcon(t);
@@ -59,15 +74,45 @@ public class SinglePlayer extends JFrame {
         for(int i=0; i<8; i++){
             main_panel.add(barca_pan[i]);
         }
-
-        c.add(main_panel);
-        setSize(1773,898);
-        setResizable(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
     }
+    public void set_map_panel(){
+        int col_increment=275;
+        for (int r=0; r<10;r++){
+            int rig_increment=367;
+            for (int i=0; i<5;i++){
+                map[r][i]=new JPanel();
+                //map[r][i].setBackground(Color.black);
+                map[r][i].setOpaque(false);
+                map[r][i].setBounds(rig_increment,col_increment,48,48);
+                main_panel.add(map[r][i]);
+                rig_increment+=53;
+            }
+            for (int i=5; i<10;i++){
+                map[r][i]=new JPanel();
+                //map[r][i].setBackground(Color.black);
+                map[r][i].setOpaque(false);
+                map[r][i].setBounds(rig_increment,col_increment,48,48);
+                main_panel.add(map[r][i]);
+                rig_increment+=52;
 
+            }
+            if(r==3){
+                col_increment+=53;
+            }
+            else if (r==9){
+                col_increment+=54;
+            }
+            else {
+                if (r%2==0){
+                    col_increment+=53;
+                }
+                if (r%2==1){
+                    col_increment+=52;
+                }
+            }
 
+        }
+    }
     public void reset_boats_position(){
         barca_pan[0].setBounds(99,68,258,45);
         barca_pan[1].setBounds(99,128,206,45);
