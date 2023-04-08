@@ -26,11 +26,13 @@ public class SinglePlayer extends JFrame {
 
 
 
+
         c.add(main_panel);
         setSize(1773,898);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+
     }
 
     public void set_boats(){
@@ -43,6 +45,8 @@ public class SinglePlayer extends JFrame {
             barca_pan[i].addMouseMotionListener(new MouseMotionAdapter() {
 
                 public void mouseDragged(MouseEvent e) {
+                    int numPanels = countPanelsUnderLabel(barca_pan[v]);
+                    System.out.println("Numero totale di JPanel sotto la JLabel: " + numPanels);
                     super.mouseDragged(e);
                     int x = e.getX() + barca_pan[v].getX();
                     int y = e.getY() + barca_pan[v].getY();
@@ -123,4 +127,19 @@ public class SinglePlayer extends JFrame {
         barca_pan[6].setBounds(105,625,37,99);
         barca_pan[7].setBounds(172,517,45,206);
     }
+
+    public int countPanelsUnderLabel(JLabel label) {
+
+
+        int count = 0;
+        for (Component comp : main_panel.getComponents()) {
+            if (comp instanceof JPanel && comp.getBounds().intersects(label.getBounds())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+
+
 }
