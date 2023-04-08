@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.dnd.*;
 import java.awt.event.*;
 
 public class SinglePlayer extends JFrame {
@@ -7,7 +8,7 @@ public class SinglePlayer extends JFrame {
     JLabel[] barca_pan= new JLabel[8];
     JPanel map_panel= new JPanel();
     JPanel map_enemy_panel= new JPanel();
-    JPanel[][] map = new JPanel[10][10];
+    JPanel_custom[][] map = new JPanel_custom[10][10];
     JPanel[][] map_enemy = new JPanel[10][10];
     ImageIcon sfondo= new ImageIcon("template.JPG");
     ImageIcon[] barca_img= new ImageIcon[8];
@@ -44,9 +45,11 @@ public class SinglePlayer extends JFrame {
             final int v=i;
             barca_pan[i].addMouseMotionListener(new MouseMotionAdapter() {
 
+
+
                 public void mouseDragged(MouseEvent e) {
                     int numPanels = countPanelsUnderLabel(barca_pan[v]);
-                    System.out.println("Numero totale di JPanel sotto la JLabel: " + numPanels);
+                    //System.out.println("Numero totale di JPanel sotto la JLabel: " + numPanels);
                     super.mouseDragged(e);
                     int x = e.getX() + barca_pan[v].getX();
                     int y = e.getY() + barca_pan[v].getY();
@@ -57,6 +60,9 @@ public class SinglePlayer extends JFrame {
                     barca_pan[v].setLocation(x, y);
                 }
             });
+
+
+
             barca_pan[v].addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -84,7 +90,9 @@ public class SinglePlayer extends JFrame {
         for (int r=0; r<10;r++){
             int rig_increment=367;
             for (int i=0; i<5;i++){
-                map[r][i]=new JPanel();
+                map[r][i]=new JPanel_custom();
+                map[r][i].setX(r);
+                map[r][i].setY(i);
                 //map[r][i].setBackground(Color.black);
                 map[r][i].setOpaque(false);
                 map[r][i].setBounds(rig_increment,col_increment,48,48);
@@ -92,7 +100,9 @@ public class SinglePlayer extends JFrame {
                 rig_increment+=53;
             }
             for (int i=5; i<10;i++){
-                map[r][i]=new JPanel();
+                map[r][i]=new JPanel_custom();
+                map[r][i].setX(r);
+                map[r][i].setY(i);
                 //map[r][i].setBackground(Color.black);
                 map[r][i].setOpaque(false);
                 map[r][i].setBounds(rig_increment,col_increment,48,48);
@@ -128,18 +138,25 @@ public class SinglePlayer extends JFrame {
         barca_pan[7].setBounds(172,517,45,206);
     }
 
+
     public int countPanelsUnderLabel(JLabel label) {
-
-
         int count = 0;
         for (Component comp : main_panel.getComponents()) {
-            if (comp instanceof JPanel && comp.getBounds().intersects(label.getBounds())) {
+            if (comp instanceof JPanel_custom && comp.getBounds().intersects(label.getBounds())) {
+                // System.out.println("prova");
+                JPanel_custom panel = (JPanel_custom) comp;
+                panel.setState(true);
+                panel.setBackground(Color.BLACK);
+                //System.out.println("stato="+panel.state);
+                panel.setOpaque(true);
                 count++;
             }
+            else if (comp instanceof JComponent) {
+                ((JComponent) comp).setOpaque(false);
+            }
         }
+        main_panel.repaint();
         return count;
     }
-
-
 
 }
