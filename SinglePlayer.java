@@ -10,14 +10,33 @@ public class SinglePlayer extends JFrame {
     JPanel map_enemy_panel= new JPanel();
     JPanel_custom[][] map = new JPanel_custom[10][10];
     JPanel[][] map_enemy = new JPanel[10][10];
+    JButton reset = new JButton();
     ImageIcon sfondo= new ImageIcon("template.JPG");
+    ImageIcon icona_reset= new ImageIcon("icon/icona_reset.png");
     ImageIcon[] barca_img= new ImageIcon[8];
+
 
 
     public SinglePlayer(){
 
         Container c= getContentPane();
         main_panel.setIcon(sfondo);
+
+        reset.setIcon(icona_reset);
+        //reset.setBackground(Color.decode("#0792F9"));
+        reset.setBorderPainted(false);
+        reset.setFocusPainted(false);
+        reset.setContentAreaFilled(false);
+        reset.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        reset.setBounds(1680,15,50,50);
+        reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reset_boats_position();
+               //reset background mappanel
+            }
+        });
+        main_panel.add(reset);
 
         set_boats();
 
@@ -127,6 +146,7 @@ public class SinglePlayer extends JFrame {
 
         }
     }
+
     public void reset_boats_position(){
         barca_pan[0].setBounds(99,68,258,45);
         barca_pan[1].setBounds(99,128,206,45);
