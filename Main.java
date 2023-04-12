@@ -8,7 +8,7 @@ public class Main {
                  IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-        SinglePlayer s= new SinglePlayer();
+        SinglePlayer s = new SinglePlayer();
         //MainMenu window = new MainMenu();
 
 

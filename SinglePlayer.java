@@ -1,25 +1,23 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.dnd.*;
 import java.awt.event.*;
 
 public class SinglePlayer extends JFrame {
-    JLabel main_panel= new JLabel();
-    JLabel[] barca_pan= new JLabel[8];
-    JPanel map_panel= new JPanel();
-    JPanel map_enemy_panel= new JPanel();
+    JLabel main_panel = new JLabel();
+    JLabel[] barca_pan = new JLabel[8];
+    JPanel map_panel = new JPanel();
+    JPanel map_enemy_panel = new JPanel();
     JPanel_custom[][] map = new JPanel_custom[10][10];
     JPanel[][] map_enemy = new JPanel[10][10];
     JButton reset = new JButton();
-    ImageIcon sfondo= new ImageIcon("template.JPG");
-    ImageIcon icona_reset= new ImageIcon("icon/icona_reset.png");
-    ImageIcon[] barca_img= new ImageIcon[8];
+    ImageIcon sfondo = new ImageIcon("template.JPG");
+    ImageIcon icona_reset = new ImageIcon("icon/icona_reset.png");
+    ImageIcon[] barca_img = new ImageIcon[8];
 
 
+    public SinglePlayer() {
 
-    public SinglePlayer(){
-
-        Container c= getContentPane();
+        Container c = getContentPane();
         main_panel.setIcon(sfondo);
 
         reset.setIcon(icona_reset);
@@ -28,12 +26,12 @@ public class SinglePlayer extends JFrame {
         reset.setFocusPainted(false);
         reset.setContentAreaFilled(false);
         reset.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        reset.setBounds(1680,15,50,50);
+        reset.setBounds(1680, 15, 50, 50);
         reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 reset_boats_position();
-               //reset background mappanel
+                //reset background mappanel
             }
         });
         main_panel.add(reset);
@@ -43,27 +41,22 @@ public class SinglePlayer extends JFrame {
         set_map_panel();
 
 
-
-
-
-
         c.add(main_panel);
-        setSize(1773,898);
+        setSize(1773, 898);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
     }
 
-    public void set_boats(){
-        for(int i=0; i<8; i++){
-            String t="barche/barca"+(i)+".png";
-            barca_img[i]= new ImageIcon(t);
-            barca_pan[i]=new JLabel();
+    public void set_boats() {
+        for (int i = 0; i < 8; i++) {
+            String t = "barche/barca" + (i) + ".png";
+            barca_img[i] = new ImageIcon(t);
+            barca_pan[i] = new JLabel();
             barca_pan[i].setIcon(barca_img[i]);
-            final int v=i;
+            final int v = i;
             barca_pan[i].addMouseMotionListener(new MouseMotionAdapter() {
-
 
 
                 public void mouseDragged(MouseEvent e) {
@@ -79,7 +72,6 @@ public class SinglePlayer extends JFrame {
                     barca_pan[v].setLocation(x, y);
                 }
             });
-
 
 
             barca_pan[v].addMouseListener(new MouseAdapter() {
@@ -100,78 +92,75 @@ public class SinglePlayer extends JFrame {
         reset_boats_position();
 
 
-        for(int i=0; i<8; i++){
+        for (int i = 0; i < 8; i++) {
             main_panel.add(barca_pan[i]);
         }
     }
-    public void set_map_panel(){
-        int col_increment=275;
-        for (int r=0; r<10;r++){
-            int rig_increment=367;
-            for (int i=0; i<5;i++){
-                map[r][i]=new JPanel_custom();
+
+    public void set_map_panel() {
+        int col_increment = 275;
+        for (int r = 0; r < 10; r++) {
+            int rig_increment = 367;
+            for (int i = 0; i < 5; i++) {
+                map[r][i] = new JPanel_custom();
                 map[r][i].setX(r);
                 map[r][i].setY(i);
                 //map[r][i].setBackground(Color.black);
                 map[r][i].setOpaque(false);
-                map[r][i].setBounds(rig_increment,col_increment,48,48);
+                map[r][i].setBounds(rig_increment, col_increment, 48, 48);
                 main_panel.add(map[r][i]);
-                rig_increment+=53;
+                rig_increment += 53;
             }
-            for (int i=5; i<10;i++){
-                map[r][i]=new JPanel_custom();
+            for (int i = 5; i < 10; i++) {
+                map[r][i] = new JPanel_custom();
                 map[r][i].setX(r);
                 map[r][i].setY(i);
                 //map[r][i].setBackground(Color.black);
                 map[r][i].setOpaque(false);
-                map[r][i].setBounds(rig_increment,col_increment,48,48);
+                map[r][i].setBounds(rig_increment, col_increment, 48, 48);
                 main_panel.add(map[r][i]);
-                rig_increment+=52;
+                rig_increment += 52;
 
             }
-            if(r==3){
-                col_increment+=53;
-            }
-            else if (r==9){
-                col_increment+=54;
-            }
-            else {
-                if (r%2==0){
-                    col_increment+=53;
+            if (r == 3) {
+                col_increment += 53;
+            } else if (r == 9) {
+                col_increment += 54;
+            } else {
+                if (r % 2 == 0) {
+                    col_increment += 53;
                 }
-                if (r%2==1){
-                    col_increment+=52;
+                if (r % 2 == 1) {
+                    col_increment += 52;
                 }
             }
 
         }
     }
 
-    public void reset_boats_position(){
-        barca_pan[0].setBounds(99,68,258,45);
-        barca_pan[1].setBounds(99,128,206,45);
-        barca_pan[2].setBounds(99,190,154,45);
-        barca_pan[3].setBounds(99,250,99,37);
-        barca_pan[4].setBounds(102,337,45,258);
-        barca_pan[5].setBounds(170,334,45,154);
-        barca_pan[6].setBounds(105,625,37,99);
-        barca_pan[7].setBounds(172,517,45,206);
+    public void reset_boats_position() {
+        barca_pan[0].setBounds(99, 68, 258, 45);
+        barca_pan[1].setBounds(99, 128, 206, 45);
+        barca_pan[2].setBounds(99, 190, 154, 45);
+        barca_pan[3].setBounds(99, 250, 99, 37);
+        barca_pan[4].setBounds(102, 337, 45, 258);
+        barca_pan[5].setBounds(170, 334, 45, 154);
+        barca_pan[6].setBounds(105, 625, 37, 99);
+        barca_pan[7].setBounds(172, 517, 45, 206);
     }
 
 
     public int countPanelsUnderLabel(JLabel label) {
         int count = 0;
         for (Component comp : main_panel.getComponents()) {
-            if (comp instanceof JPanel_custom && comp.getBounds().intersects(label.getBounds())) {
+            if (comp instanceof JPanel_custom panel && comp.getBounds().intersects(label.getBounds())) {
                 // System.out.println("prova");
-                JPanel_custom panel = (JPanel_custom) comp;
                 panel.setState(true);
                 panel.setBackground(Color.BLACK);
                 //System.out.println("stato="+panel.state);
                 panel.setOpaque(true);
                 count++;
-            }
-            else if (comp instanceof JComponent) {
+            } else if (comp instanceof JComponent) {
                 ((JComponent) comp).setOpaque(false);
             }
         }
