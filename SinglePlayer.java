@@ -13,6 +13,7 @@ public class SinglePlayer extends JFrame {
 
     //    Array of boats' images
     JLabel[] boats = new JLabel[8];
+    JLabel[] boats_bg = new JLabel[8];
 
     //    Matrix of the player map's JPanels
     Square[][] map = new Square[10][10];
@@ -37,12 +38,14 @@ public class SinglePlayer extends JFrame {
         resetBoats_Button.setFocusPainted(false);
         resetBoats_Button.setContentAreaFilled(false);
         resetBoats_Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        resetBoats_Button.setBounds(1680, 15, 50, 50);
+        resetBoats_Button.setBounds(120, 770, 50, 50);
         resetBoats_Button.addActionListener(e -> {
             resetBoats();
             // TODO: reset background mappanel
         });
         mainPanel.add(resetBoats_Button);
+
+
 
         createMap();
         setBoats();
@@ -53,7 +56,7 @@ public class SinglePlayer extends JFrame {
 
         c.add(mainPanel);
         pack();
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -62,6 +65,9 @@ public class SinglePlayer extends JFrame {
         for (int i = 0; i < 8; i++) {
             boats[i] = new JLabel();
             boats[i].setIcon(new ImageIcon(String.format("barche/barca%d.png", i)));
+            boats_bg[i]=new JLabel();
+            boats_bg[i].setIcon(new ImageIcon(String.format("barche_bg/%d.png", i)));
+
             final int v = i;
 
 //            JLayeredPane layeredPane = new JLayeredPane();
@@ -111,6 +117,11 @@ public class SinglePlayer extends JFrame {
 
         for (int i = 0; i < 8; i++) {
             mainPanel.add(boats[i]);
+
+        }
+        for (int i = 0; i < 8; i++) {
+            mainPanel.add(boats_bg[i]);
+
         }
     }
 
@@ -144,6 +155,16 @@ public class SinglePlayer extends JFrame {
 
         boats[7].setBounds(170, 517, 45, 206);
         boats[5].setBounds(170, 334, 45, 154);
+
+        boats_bg[0].setBounds(100, 68, 258, 45);
+        boats_bg[1].setBounds(100, 128, 206, 45);
+        boats_bg[2].setBounds(100, 190, 154, 45);
+        boats_bg[3].setBounds(100, 250, 99, 37);
+        boats_bg[4].setBounds(100, 337, 45, 258);
+        boats_bg[6].setBounds(100, 625, 37, 99);
+
+        boats_bg[7].setBounds(170, 517, 45, 206);
+        boats_bg[5].setBounds(170, 334, 45, 154);
     }
 
 
