@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.HashSet;
+import java.util.Set;
 
 //RIFARE POSIZIONAMENTO DENTRO GRIDPANEL
 //CONTROLLO FUNZIONAMENTO JLAYERPANE
@@ -86,7 +88,15 @@ public class SinglePlayer extends JFrame {
 
                     x = Math.max(0, Math.min(x, maxX));
                     y = Math.max(0, Math.min(y, maxY));
-                    boats[v].setLocation(x, y);
+
+
+                    System.out.println(x + " " + y);
+//                    boats[v].setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                    if (x > 200 && y > 150)
+                        boats[v].setLocation((Math.round((float) x / 54) * 54) - 20, (Math.round((float) y / 54) * 54) - 20);
+                    else {
+                        boats[v].setLocation(x, y);
+                    }
                 }
             });
 
@@ -146,6 +156,12 @@ public class SinglePlayer extends JFrame {
     }
 
     public void resetBoats() {
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                map[row][col].setOpaque(false);
+            }
+        }
+
         boats[0].setBounds(100, 68, 258, 45);
         boats[1].setBounds(100, 128, 206, 45);
         boats[2].setBounds(100, 190, 154, 45);
@@ -165,38 +181,37 @@ public class SinglePlayer extends JFrame {
 
         boats_bg[7].setBounds(170, 517, 45, 206);
         boats_bg[5].setBounds(170, 334, 45, 154);
+
+        gridPanel.repaint();
     }
 
 
     public void checkIfOverLabel(JLabel boat) {
-        int selected = 0;
+        Set<Component> selectedCells = new HashSet<>(); // Set to keep track of selected grid cells
+
         for (Component comp : gridPanel.getComponents()) {
             if (comp instanceof Square panel) {
                 Rectangle compBounds = SwingUtilities.convertRectangle(comp.getParent(), comp.getBounds(), gridPanel);
                 Rectangle boatBounds = SwingUtilities.convertRectangle(boat.getParent(), boat.getBounds(), gridPanel);
+
                 if (boatBounds.intersects(compBounds)) {
-                    if (getBoatSize(boat) > selected) {
+                    if (getBoatSize(boat)> selectedCells.size()) {
+                        selectedCells.add(panel); // Add the panel to the set of selected cells
                         panel.setState(true);
                         panel.setBackground(new Color(0, 0, 0, 0.5f));
                         panel.setOpaque(true);
-                        selected++;
                     }
-                    else {
-                        panel.setState(false);
-                        panel.setOpaque(false);
-                    }
-
                 } else {
-                    ((JComponent) comp).setOpaque(false);
+                    selectedCells.remove(panel); // Remove the panel from the set of selected cells
                     panel.setState(false);
-                    if (selected > 0) {
-                        selected--;
-                    }
+                    panel.setOpaque(false);
                 }
             }
         }
+
         gridPanel.repaint();
     }
+
 
 
 //    public void checkIfOverLabel(JLabel label) {
