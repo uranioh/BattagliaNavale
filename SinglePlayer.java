@@ -4,6 +4,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
+//RIFARE POSIZIONAMENTO DENTRO GRIDPANEL
+//CONTROLLO FUNZIONAMENTO JLAYERPANE
 public class SinglePlayer extends JFrame {
     //    Background image panel
     JLabel mainPanel = new JLabel();
