@@ -142,20 +142,25 @@ public class SinglePlayer extends JFrame {
     }
 
 
-        public void checkIfOverLabel(JLabel boat) {
+    public void checkIfOverLabel(JLabel boat) {
         for (Component comp : gridPanel.getComponents()) {
-            if (comp instanceof Square panel && comp.getBounds().intersects(boat.getBounds())) {
-                System.out.println("Boat: " + boat.getBounds());
-                System.out.println("Component: " + comp.getBounds());
-//                panel.setState(true);
-//                panel.setBackground(new Color(0, 0, 0, 0.5f));
-//                panel.setOpaque(true);
-            } else if (comp instanceof JComponent) {
-                ((JComponent) comp).setOpaque(false);
+            if (comp instanceof Square panel) {
+                Rectangle compBounds = SwingUtilities.convertRectangle(comp.getParent(), comp.getBounds(), gridPanel);
+                Rectangle boatBounds = SwingUtilities.convertRectangle(boat.getParent(), boat.getBounds(), gridPanel);
+                if (boatBounds.intersects(compBounds)) {
+                    System.out.println("Boat: " + boat.getBounds());
+                    System.out.println("Component: " + comp.getBounds());
+                    panel.setState(true);
+                    panel.setBackground(new Color(0, 0, 0, 0.5f));
+                    panel.setOpaque(true);
+                } else {
+                    ((JComponent) comp).setOpaque(false);
+                }
             }
         }
         gridPanel.repaint();
     }
+
 
 //    public void checkIfOverLabel(JLabel label) {
 //        for (Component comp : gridPanel.getComponents()) {
