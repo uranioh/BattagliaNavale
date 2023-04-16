@@ -1,166 +1,173 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class SinglePlayer extends JFrame {
-//    Background image panel
-    JLabel main_panel = new JLabel();
+    //    Background image panel
+    JLabel mainPanel = new JLabel();
+    JLabel gridPanel = new JLabel();
 
-//    Array of boats' images
-    JLabel[] boatsImages = new JLabel[8];
+    //    Array of boats' images
+    JLabel[] boats = new JLabel[8];
 
-//    Matrix of the player map's JPanels
+    //    Matrix of the player map's JPanels
     Square[][] map = new Square[10][10];
-    JPanel[][] map_enemy = new JPanel[10][10];
 
-    JButton resetBoatPosition = new JButton();
+    JButton resetBoats_Button = new JButton();
+    ImageIcon resetBoats_Icon = new ImageIcon("icon/icona_reset.png");
 
-//    Various icons
-    ImageIcon sfondo = new ImageIcon("template.jpg");
-    ImageIcon icona_reset = new ImageIcon("icon/icona_reset.png");
-    ImageIcon[] barca_img = new ImageIcon[8];
+    //    Various icons
+    ImageIcon bg = new ImageIcon("template.jpg");
+    ImageIcon grid = new ImageIcon("grid.png");
 
 
     public SinglePlayer() {
         Container c = getContentPane();
 
 //        Set background image
-        main_panel.setIcon(sfondo);
+        mainPanel.setIcon(bg);
 
 //        Reset button properties
-        resetBoatPosition.setIcon(icona_reset);
-        resetBoatPosition.setBorderPainted(false);
-        resetBoatPosition.setFocusPainted(false);
-        resetBoatPosition.setContentAreaFilled(false);
-        resetBoatPosition.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        resetBoatPosition.setBounds(1680, 15, 50, 50);
-        resetBoatPosition.addActionListener(e -> {
-            reset_boats_position();
+        resetBoats_Button.setIcon(resetBoats_Icon);
+        resetBoats_Button.setBorderPainted(false);
+        resetBoats_Button.setFocusPainted(false);
+        resetBoats_Button.setContentAreaFilled(false);
+        resetBoats_Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        resetBoats_Button.setBounds(1680, 15, 50, 50);
+        resetBoats_Button.addActionListener(e -> {
+            resetBoats();
             // TODO: reset background mappanel
         });
-        main_panel.add(resetBoatPosition);
+        mainPanel.add(resetBoats_Button);
 
-        set_boats();
-        set_map_panel();
+        gridPanel.setIcon(grid);
+        gridPanel.setLayout(null);
+        gridPanel.setBounds(bg.getIconWidth() / 2 - 500, bg.getIconHeight() / 2 - 594 / 2, 594, 594);
+        mainPanel.add(gridPanel);
 
+        setBoats();
+        createMap();
 
-        c.add(main_panel);
+        c.add(mainPanel);
         pack();
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
     }
 
-    public void set_boats() {
+    public void setBoats() {
         for (int i = 0; i < 8; i++) {
-            barca_img[i] = new ImageIcon(String.format("barche/barca%d.png", i));
-            boatsImages[i] = new JLabel();
-            boatsImages[i].setIcon(barca_img[i]);
+            boats[i] = new JLabel();
+            boats[i].setIcon(new ImageIcon(String.format("barche/barca%d.png", i)));
             final int v = i;
-            boatsImages[i].addMouseMotionListener(new MouseMotionAdapter() {
+
+//            JLayeredPane layeredPane = new JLayeredPane();
+//            panel.setComponentZOrder(label, 0);
+
+
+            boats[i].addMouseMotionListener(new MouseMotionAdapter() {
                 public void mouseDragged(MouseEvent e) {
-                    countPanelsUnderLabel(boatsImages[v]);
-//                    System.out.println("Numero totale di JPanel sotto la JLabel: " + numPanels);
+                    checkIfOverLabel(boats[v]);
                     super.mouseDragged(e);
-                    int x = e.getX() + boatsImages[v].getX();
-                    int y = e.getY() + boatsImages[v].getY();
-                    int maxX = boatsImages[v].getParent().getWidth() - boatsImages[v].getWidth();
-                    int maxY = boatsImages[v].getParent().getHeight() - boatsImages[v].getHeight();
+
+                    int x = e.getXOnScreen() - boats[v].getParent().getLocationOnScreen().x - boats[v].getWidth() / 2;
+                    int y = e.getYOnScreen() - boats[v].getParent().getLocationOnScreen().y - boats[v].getHeight() / 2;
+                    int maxX = boats[v].getParent().getWidth() - boats[v].getWidth();
+                    int maxY = boats[v].getParent().getHeight() - boats[v].getHeight();
+
                     x = Math.max(0, Math.min(x, maxX));
                     y = Math.max(0, Math.min(y, maxY));
-                    boatsImages[v].setLocation(x, y);
+                    boats[v].setLocation(x, y);
                 }
             });
 
 
-            boatsImages[v].addMouseListener(new MouseAdapter() {
+            boats[v].addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     super.mousePressed(e);
-                    boatsImages[v].setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                    boats[v].setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
                     super.mouseReleased(e);
-                    boatsImages[v].setCursor(Cursor.getDefaultCursor());
+                    boats[v].setCursor(Cursor.getDefaultCursor());
                 }
             });
         }
 
-        reset_boats_position();
+        resetBoats();
 
 
         for (int i = 0; i < 8; i++) {
-            main_panel.add(boatsImages[i]);
+            mainPanel.add(boats[i]);
         }
     }
 
-    public void set_map_panel() {
-        int col_increment = 275;
+    public void createMap() {
+        int gapSize = 4;
+        int col_increment = gapSize;
+
         for (int row = 0; row < 10; row++) {
-            int row_increment = 367;
-            for (int col = 0; col < 5; col++) {
+            int row_increment = gapSize;
+            for (int col = 0; col < 10; col++) {
                 map[row][col] = new Square();
-                map[row][col].setX(row);
-                map[row][col].setY(col);
-                //map[row][col].setBackground(Color.black);
                 map[row][col].setOpaque(false);
-                map[row][col].setBounds(row_increment, col_increment, 48, 48);
-                main_panel.add(map[row][col]);
-                row_increment += 53;
+                map[row][col].setX(row_increment);
+                map[row][col].setY(col_increment);
+                map[row][col].setBounds(row_increment, col_increment, 50, 50);
+                map[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                gridPanel.add(map[row][col]);
+                row_increment += 54;
             }
-            for (int col = 5; col < 10; col++) {
-                map[row][col] = new Square();
-                map[row][col].setX(row);
-                map[row][col].setY(col);
-                //map[row][col].setBackground(Color.black);
-                map[row][col].setBorder(BorderFactory.createLineBorder(Color.black));
-                map[row][col].setOpaque(false);
-                map[row][col].setBounds(row_increment, col_increment, 48, 48);
-                main_panel.add(map[row][col]);
-                row_increment += 52;
-
-            }
-            if (row == 3) {
-                col_increment += 53;
-            } else if (row == 9) {
-                col_increment += 54;
-            } else {
-                if (row % 2 == 0) {
-                    col_increment += 53;
-                }
-                if (row % 2 == 1) {
-                    col_increment += 52;
-                }
-            }
-
+            col_increment += 54;
         }
     }
 
-    public void reset_boats_position() {
-        boatsImages[0].setBounds(99, 68, 258, 45);
-        boatsImages[1].setBounds(99, 128, 206, 45);
-        boatsImages[2].setBounds(99, 190, 154, 45);
-        boatsImages[3].setBounds(99, 250, 99, 37);
-        boatsImages[4].setBounds(102, 337, 45, 258);
-        boatsImages[5].setBounds(170, 334, 45, 154);
-        boatsImages[6].setBounds(105, 625, 37, 99);
-        boatsImages[7].setBounds(172, 517, 45, 206);
+    public void resetBoats() {
+        boats[0].setBounds(100, 68, 258, 45);
+        boats[1].setBounds(100, 128, 206, 45);
+        boats[2].setBounds(100, 190, 154, 45);
+        boats[3].setBounds(100, 250, 99, 37);
+        boats[4].setBounds(100, 337, 45, 258);
+        boats[6].setBounds(100, 625, 37, 99);
+
+        boats[7].setBounds(170, 517, 45, 206);
+        boats[5].setBounds(170, 334, 45, 154);
     }
 
 
-    public void countPanelsUnderLabel(JLabel label) {
-        for (Component comp : main_panel.getComponents()) {
-            if (comp instanceof Square panel && comp.getBounds().intersects(label.getBounds())) {
-                panel.setState(true);
-                panel.setBackground(new Color(0, 0, 0, 0.5f));
-                panel.setOpaque(true);
+        public void checkIfOverLabel(JLabel boat) {
+        for (Component comp : gridPanel.getComponents()) {
+            if (comp instanceof Square panel && comp.getBounds().intersects(boat.getBounds())) {
+                System.out.println("Boat: " + boat.getBounds());
+                System.out.println("Component: " + comp.getBounds());
+//                panel.setState(true);
+//                panel.setBackground(new Color(0, 0, 0, 0.5f));
+//                panel.setOpaque(true);
             } else if (comp instanceof JComponent) {
                 ((JComponent) comp).setOpaque(false);
             }
         }
-        main_panel.repaint();
+        gridPanel.repaint();
     }
+
+//    public void checkIfOverLabel(JLabel label) {
+//        for (Component comp : gridPanel.getComponents()) {
+//            if (comp instanceof Square panel && comp.getBounds().intersects(label.getBounds())) {
+//                System.out.println("Boat: " + label.getBounds());
+//                System.out.println("Component: " + comp.getBounds());
+//                panel.setState(true);
+//                panel.setBackground(new Color(0, 0, 0, 0.5f));
+//                panel.setOpaque(true);
+//            } else if (comp instanceof JComponent) {
+//                ((JComponent) comp).setOpaque(false);
+//            }
+//        }
+//        gridPanel.repaint();
+//    }
 
 }
