@@ -44,13 +44,12 @@ public class SinglePlayer extends JFrame {
         });
         mainPanel.add(resetBoats_Button);
 
+        createMap();
+        setBoats();
         gridPanel.setIcon(grid);
         gridPanel.setLayout(null);
         gridPanel.setBounds(bg.getIconWidth() / 2 - 500, bg.getIconHeight() / 2 - 594 / 2, 594, 594);
         mainPanel.add(gridPanel);
-
-        setBoats();
-        createMap();
 
         c.add(mainPanel);
         pack();
@@ -97,6 +96,12 @@ public class SinglePlayer extends JFrame {
                 public void mouseReleased(MouseEvent e) {
                     super.mouseReleased(e);
                     boats[v].setCursor(Cursor.getDefaultCursor());
+
+                    int size = getBoatSize(boats[v]);
+                    System.out.println(size);
+
+                    System.out.println(boats[v].getX());
+                    System.out.println(boats[v].getY());
                 }
             });
         }
@@ -121,7 +126,7 @@ public class SinglePlayer extends JFrame {
                 map[row][col].setX(row_increment);
                 map[row][col].setY(col_increment);
                 map[row][col].setBounds(row_increment, col_increment, 50, 50);
-                map[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+//                map[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
                 gridPanel.add(map[row][col]);
                 row_increment += 54;
             }
@@ -143,18 +148,29 @@ public class SinglePlayer extends JFrame {
 
 
     public void checkIfOverLabel(JLabel boat) {
+        int selected = 0;
         for (Component comp : gridPanel.getComponents()) {
             if (comp instanceof Square panel) {
                 Rectangle compBounds = SwingUtilities.convertRectangle(comp.getParent(), comp.getBounds(), gridPanel);
                 Rectangle boatBounds = SwingUtilities.convertRectangle(boat.getParent(), boat.getBounds(), gridPanel);
                 if (boatBounds.intersects(compBounds)) {
-                    System.out.println("Boat: " + boat.getBounds());
-                    System.out.println("Component: " + comp.getBounds());
-                    panel.setState(true);
-                    panel.setBackground(new Color(0, 0, 0, 0.5f));
-                    panel.setOpaque(true);
+                    if (getBoatSize(boat) > selected) {
+                        panel.setState(true);
+                        panel.setBackground(new Color(0, 0, 0, 0.5f));
+                        panel.setOpaque(true);
+                        selected++;
+                    }
+                    else {
+                        panel.setState(false);
+                        panel.setOpaque(false);
+                    }
+
                 } else {
                     ((JComponent) comp).setOpaque(false);
+                    panel.setState(false);
+                    if (selected > 0) {
+                        selected--;
+                    }
                 }
             }
         }
@@ -177,4 +193,13 @@ public class SinglePlayer extends JFrame {
 //        gridPanel.repaint();
 //    }
 
+    private int getBoatSize(JLabel boat) {
+        int size;
+        if (boat.getWidth() > boat.getHeight()) {
+            size = Math.round((float) boat.getWidth() / 50);
+        } else {
+            size = Math.round((float) boat.getHeight() / 50);
+        }
+        return size;
+    }
 }

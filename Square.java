@@ -14,6 +14,10 @@ public class Square extends JPanel {
         this.state = state;
     }
 
+    public boolean getState() {
+        return this.state;
+    }
+
     public void setX(int x) {
         this.x = x;
     }
