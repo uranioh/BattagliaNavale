@@ -1,24 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.HashSet;
 import java.util.Set;
 
-//RIFARE POSIZIONAMENTO DENTRO GRIDPANEL
-//CONTROLLO FUNZIONAMENTO JLAYERPANE
 public class SinglePlayer extends JFrame {
     //    Background image panel
     JLabel mainPanel = new JLabel();
     JLabel gridPanel = new JLabel();
 
     //    Array of boats' images
-    JLabel[] boats = new JLabel[8];
+    Boat[] boats = new Boat[8];
     JLabel[] boats_bg = new JLabel[8];
 
     //    Matrix of the player map's JPanels
-    Square[][] map = new Square[10][10];
+    GridItem[][] gridItems = new GridItem[10][10];
 
     JButton resetBoats_Button = new JButton();
     ImageIcon resetBoats_Icon = new ImageIcon("icon/icona_reset.png");
@@ -48,8 +45,7 @@ public class SinglePlayer extends JFrame {
         mainPanel.add(resetBoats_Button);
 
 
-
-        createMap();
+        createGridItems();
         setBoats();
         gridPanel.setIcon(grid);
         gridPanel.setLayout(null);
@@ -65,21 +61,19 @@ public class SinglePlayer extends JFrame {
 
     public void setBoats() {
         for (int i = 0; i < 8; i++) {
-            boats[i] = new JLabel();
-            boats[i].setIcon(new ImageIcon(String.format("barche/barca%d.png", i)));
-            boats_bg[i]=new JLabel();
-            boats_bg[i].setIcon(new ImageIcon(String.format("barche_bg/%d.png", i)));
+            boats[i] = new Boat();
+            boats[i].setIcon(new ImageIcon(String.format("boats/%d.png", i)));
+
+            boats_bg[i] = new JLabel();
+            boats_bg[i].setIcon(new ImageIcon(String.format("boats_bg/%d.png", i)));
 
             final int v = i;
 
-//            JLayeredPane layeredPane = new JLayeredPane();
-//            panel.setComponentZOrder(label, 0);
-
-
             boats[i].addMouseMotionListener(new MouseMotionAdapter() {
                 public void mouseDragged(MouseEvent e) {
-                    checkIfOverLabel(boats[v]);
                     super.mouseDragged(e);
+
+                    checkIfOverLabel(boats[v]);
 
                     int x = e.getXOnScreen() - boats[v].getParent().getLocationOnScreen().x - boats[v].getWidth() / 2;
                     int y = e.getYOnScreen() - boats[v].getParent().getLocationOnScreen().y - boats[v].getHeight() / 2;
@@ -90,34 +84,12 @@ public class SinglePlayer extends JFrame {
                     y = Math.max(0, Math.min(y, maxY));
 
 
-                    System.out.println(x + " " + y);
 //                    boats[v].setBorder(BorderFactory.createLineBorder(Color.RED, 2));
                     if (x > 200 && y > 150)
                         boats[v].setLocation((Math.round((float) x / 54) * 54) - 20, (Math.round((float) y / 54) * 54) - 20);
                     else {
                         boats[v].setLocation(x, y);
                     }
-                }
-            });
-
-
-            boats[v].addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    super.mousePressed(e);
-                    boats[v].setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    super.mouseReleased(e);
-                    boats[v].setCursor(Cursor.getDefaultCursor());
-
-                    int size = getBoatSize(boats[v]);
-                    System.out.println(size);
-
-                    System.out.println(boats[v].getX());
-                    System.out.println(boats[v].getY());
                 }
             });
         }
@@ -135,20 +107,24 @@ public class SinglePlayer extends JFrame {
         }
     }
 
-    public void createMap() {
+    public void createGridItems() {
         int gapSize = 4;
         int col_increment = gapSize;
 
         for (int row = 0; row < 10; row++) {
             int row_increment = gapSize;
             for (int col = 0; col < 10; col++) {
-                map[row][col] = new Square();
-                map[row][col].setOpaque(false);
-                map[row][col].setX(row_increment);
-                map[row][col].setY(col_increment);
-                map[row][col].setBounds(row_increment, col_increment, 50, 50);
+                gridItems[row][col] = new GridItem();
+                gridItems[row][col].setOpaque(false);
+
+//                GridItem class properties
+                gridItems[row][col].setX(row_increment);
+                gridItems[row][col].setY(col_increment);
+
+
+                gridItems[row][col].setBounds(row_increment, col_increment, 50, 50);
 //                map[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-                gridPanel.add(map[row][col]);
+                gridPanel.add(gridItems[row][col]);
                 row_increment += 54;
             }
             col_increment += 54;
@@ -158,7 +134,7 @@ public class SinglePlayer extends JFrame {
     public void resetBoats() {
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
-                map[row][col].setOpaque(false);
+                gridItems[row][col].setOpaque(false);
             }
         }
 
@@ -186,16 +162,16 @@ public class SinglePlayer extends JFrame {
     }
 
 
-    public void checkIfOverLabel(JLabel boat) {
+    public void checkIfOverLabel(Boat boat) {
         Set<Component> selectedCells = new HashSet<>(); // Set to keep track of selected grid cells
 
         for (Component comp : gridPanel.getComponents()) {
-            if (comp instanceof Square panel) {
+            if (comp instanceof GridItem panel) {
                 Rectangle compBounds = SwingUtilities.convertRectangle(comp.getParent(), comp.getBounds(), gridPanel);
                 Rectangle boatBounds = SwingUtilities.convertRectangle(boat.getParent(), boat.getBounds(), gridPanel);
 
                 if (boatBounds.intersects(compBounds)) {
-                    if (getBoatSize(boat)> selectedCells.size()) {
+                    if (boat.getBoatSize() > selectedCells.size()) {
                         selectedCells.add(panel); // Add the panel to the set of selected cells
                         panel.setState(true);
                         panel.setBackground(new Color(0, 0, 0, 0.5f));
@@ -210,32 +186,5 @@ public class SinglePlayer extends JFrame {
         }
 
         gridPanel.repaint();
-    }
-
-
-
-//    public void checkIfOverLabel(JLabel label) {
-//        for (Component comp : gridPanel.getComponents()) {
-//            if (comp instanceof Square panel && comp.getBounds().intersects(label.getBounds())) {
-//                System.out.println("Boat: " + label.getBounds());
-//                System.out.println("Component: " + comp.getBounds());
-//                panel.setState(true);
-//                panel.setBackground(new Color(0, 0, 0, 0.5f));
-//                panel.setOpaque(true);
-//            } else if (comp instanceof JComponent) {
-//                ((JComponent) comp).setOpaque(false);
-//            }
-//        }
-//        gridPanel.repaint();
-//    }
-
-    private int getBoatSize(JLabel boat) {
-        int size;
-        if (boat.getWidth() > boat.getHeight()) {
-            size = Math.round((float) boat.getWidth() / 50);
-        } else {
-            size = Math.round((float) boat.getHeight() / 50);
-        }
-        return size;
     }
 }

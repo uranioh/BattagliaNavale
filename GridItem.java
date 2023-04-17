@@ -1,12 +1,12 @@
 import javax.swing.*;
 
-public class Square extends JPanel {
+public class GridItem extends JPanel {
     public boolean state;
     public boolean state_back;
     int x;
     int y;
 
-    public Square() {
+    public GridItem() {
         state = false;
     }
 
