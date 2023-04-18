@@ -1,21 +1,23 @@
 import javax.swing.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class GridItem extends JPanel {
+public class GridItem extends JPanel implements MouseListener {
     public boolean state;
-    public boolean state_back;
     int x;
     int y;
 
     public GridItem() {
+        this.addMouseListener(this);
         state = false;
-    }
-
-    public void setState(boolean state) {
-        this.state = state;
     }
 
     public boolean getState() {
         return this.state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
     }
 
     public void setX(int x) {
@@ -26,11 +28,28 @@ public class GridItem extends JPanel {
         this.y = y;
     }
 
-    public void setState_back(boolean state_back) {
-        this.state_back = state_back;
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("X: " + x + " Y: " + y);
     }
 
-    public boolean getStateback() {
-        return this.state_back;
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
