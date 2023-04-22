@@ -8,11 +8,11 @@ public class windowListenerSinglePlayer implements WindowListener {
     }
     @Override
     public void windowOpened(WindowEvent e) {
-        System.out.println(s.getWidth());
-        if(s.getWidth()<1919){
-            System.out.println(s.getWidth());
-            s.setBoatsResize();
-        }
+//        System.out.println(s.getWidth());
+//        if(s.getWidth()<1919){
+//            System.out.println(s.getWidth());
+//            s.setBoatsResize();
+//        }
     }
 
     @Override
