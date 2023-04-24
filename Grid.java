@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Grid extends JLabel {
+    static Set<GridItem> selectedCells;
+
     ImageIcon gridBackground = new ImageIcon("assets/grid.png");
     GridItem[][] gridItems = new GridItem[10][10];
 
@@ -39,8 +41,8 @@ public class Grid extends JLabel {
         }
     }
 
-    public void checkIfOverLabel(Ship ship) {
-        Set<Component> selectedCells = new HashSet<>(); // Set to keep track of selected grid cells
+    public int checkIfOverLabel(Ship ship) {
+        selectedCells = new HashSet<>(); // Set to keep track of selected grid cells
 
         for (Component comp : this.getComponents()) {
             if (comp instanceof GridItem gridItem) {
@@ -56,8 +58,16 @@ public class Grid extends JLabel {
 
                         System.out.println("Ship " + ship.id + " is over grid cell: " + gridItem.getRelativeX() + ", " + gridItem.getRelativeY());
                     }
-                } else {
+                } else if (selectedCells.size() == ship.getShipSize()) {
+                    System.out.println("lmao all boat in grid");
+                    ship.validPosition = true;
+                    gridItem.setState(false);
+                    gridItem.setOpaque(false);
+                }
+
+                else {
                     selectedCells.remove(gridItem); // Remove the panel from the set of selected cells
+                    ship.validPosition = false;
                     gridItem.setState(false);
                     gridItem.setOpaque(false);
                 }
@@ -65,6 +75,8 @@ public class Grid extends JLabel {
         }
 
         this.repaint();
+
+        return selectedCells.size();
     }
 
 

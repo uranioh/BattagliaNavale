@@ -77,6 +77,13 @@ public class Multiplayer extends JFrame {
     }
 
     public void resetShips() {
+        for (Ship s : ships) {
+            for (GridItem gridItem : s.selectedCells) {
+                gridItem.setBorder(null);
+            }
+            s.selectedCells.clear();
+        }
+
         ships[0].setBounds(100, 68, 266, 50);
         ships[1].setBounds(100, 128, 212, 50);
         ships[2].setBounds(100, 190, 158, 50);
