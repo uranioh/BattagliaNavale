@@ -13,7 +13,7 @@ public class MainMenu extends JFrame {
     JButton online = new JButton("ONLINE");
     JButton account = new JButton("ACCOUNT");
     JButton impostazioni = new JButton("IMPOSTAZIONI");
-    ImageIcon bg = new ImageIcon("template.jpg");
+    ImageIcon bg = new ImageIcon("assets/background.jpg");
 
 
     public MainMenu() {
