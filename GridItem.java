@@ -1,36 +1,63 @@
 import javax.swing.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class GridItem extends JPanel {
+public class GridItem extends JPanel implements MouseListener {
     public boolean state;
-    public boolean state_back;
-    int x;
-    int y;
+    private int x, y;
 
     public GridItem() {
+        this.addMouseListener(this);
         state = false;
-    }
-
-    public void setState(boolean state) {
-        this.state = state;
     }
 
     public boolean getState() {
         return this.state;
     }
 
-    public void setX(int x) {
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
+    public void setRelativeX(int x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setRelativeY(int y) {
         this.y = y;
     }
 
-    public void setState_back(boolean state_back) {
-        this.state_back = state_back;
+    public int getRelativeX() {
+        return this.x;
     }
 
-    public boolean getStateback() {
-        return this.state_back;
+    public int getRelativeY() {
+        return this.y;
+    }
+
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("X: " + x + " Y: " + y);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
