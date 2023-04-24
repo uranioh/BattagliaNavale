@@ -1,37 +1,30 @@
 import javax.swing.*;
-
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.RoundRectangle2D;
 
-public class MainMenu extends JFrame{
+public class MainMenu extends JFrame {
     JLabel gameTitle = new JLabel("BATTAGLIA NAVALE");
-    JPanel bottom= new JPanel();
+    JPanel bottom = new JPanel();
     JLabel mainPanel = new JLabel();
-    JPanel localePanel= new JPanel();
-    JPanel onlinePanel= new JPanel();
-    JPanel accountPanel= new JPanel();
-    JPanel impostazioniPanel= new JPanel();
-    JButton locale= new JButton("LOCALE");
-    JButton online= new JButton("ONLINE");
-    JButton account= new JButton("ACCOUNT");
-    JButton impostazioni= new JButton("IMPOSTAZIONI");
+    JPanel localePanel = new JPanel();
+    JPanel onlinePanel = new JPanel();
+    JPanel accountPanel = new JPanel();
+    JPanel impostazioniPanel = new JPanel();
+    JButton locale = new JButton("LOCALE");
+    JButton online = new JButton("ONLINE");
+    JButton account = new JButton("ACCOUNT");
+    JButton impostazioni = new JButton("IMPOSTAZIONI");
     ImageIcon bg = new ImageIcon("template.jpg");
 
 
     public MainMenu() {
-        Container c=getContentPane();
+        Container c = getContentPane();
         mainPanel.setIcon(bg);
         mainPanel.add(gameTitle);
-        gameTitle.setBounds(600,100,1000,100);
+        gameTitle.setBounds(600, 100, 1000, 100);
         gameTitle.setForeground(Color.WHITE);
-        gameTitle.setFont(new Font("Arial",Font.BOLD,70));
+        gameTitle.setFont(new Font("Arial", Font.BOLD, 70));
 
         createBottom();
-
-
 
 
         c.add(mainPanel);
@@ -41,7 +34,8 @@ public class MainMenu extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    public void createBottom(){
+
+    public void createBottom() {
         localePanel.add(locale);
         onlinePanel.add(online);
         accountPanel.add(account);
@@ -72,10 +66,10 @@ public class MainMenu extends JFrame{
         impostazioniPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
         impostazioniPanel.setOpaque(false);
 
-        locale.setPreferredSize(new Dimension(210,80));
-        online.setPreferredSize(new Dimension(210,80));
-        account.setPreferredSize(new Dimension(210,50));
-        impostazioni.setPreferredSize(new Dimension(210,50));
+        locale.setPreferredSize(new Dimension(210, 80));
+        online.setPreferredSize(new Dimension(210, 80));
+        account.setPreferredSize(new Dimension(210, 50));
+        impostazioni.setPreferredSize(new Dimension(210, 50));
 
         //locale.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5,true));
         locale.setContentAreaFilled(false);
@@ -97,10 +91,10 @@ public class MainMenu extends JFrame{
         impostazioni.setForeground(Color.white);
         impostazioni.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        locale.setFont(new Font("Arial",Font.BOLD,35));
-        online.setFont(new Font("Arial",Font.BOLD,35));
-        account.setFont(new Font("Arial",Font.BOLD,20));
-        impostazioni.setFont(new Font("Arial",Font.BOLD,20));
+        locale.setFont(new Font("Arial", Font.BOLD, 35));
+        online.setFont(new Font("Arial", Font.BOLD, 35));
+        account.setFont(new Font("Arial", Font.BOLD, 20));
+        impostazioni.setFont(new Font("Arial", Font.BOLD, 20));
 
         locale.setFocusPainted(false);
         online.setFocusPainted(false);
@@ -108,7 +102,7 @@ public class MainMenu extends JFrame{
         impostazioni.setFocusPainted(false);
 
         bottom.setLayout(new FlowLayout());
-        bottom.setBounds(655,620,600,250);
+        bottom.setBounds(655, 620, 600, 250);
         bottom.setOpaque(false);
         mainPanel.add(bottom);
 
