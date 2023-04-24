@@ -4,8 +4,7 @@ import java.awt.event.MouseListener;
 
 public class GridItem extends JPanel implements MouseListener {
     public boolean state;
-    int x;
-    int y;
+    private int x, y;
 
     public GridItem() {
         this.addMouseListener(this);
@@ -20,13 +19,22 @@ public class GridItem extends JPanel implements MouseListener {
         this.state = state;
     }
 
-    public void setX(int x) {
+    public void setRelativeX(int x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setRelativeY(int y) {
         this.y = y;
     }
+
+    public int getRelativeX() {
+        return this.x;
+    }
+
+    public int getRelativeY() {
+        return this.y;
+    }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
