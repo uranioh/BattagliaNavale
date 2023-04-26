@@ -7,7 +7,7 @@ import java.util.HashSet;
 
 public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     static int counter = 0;
-    Multiplayer multiplayer;
+    UI _ui;
     int id, size;
     char orientation;
 
@@ -17,8 +17,8 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
     HashSet<GridItem> selectedCells = new HashSet<>();
 
-    public Ship(Multiplayer multiplayer) {
-        this.multiplayer = multiplayer;
+    public Ship(UI ui) {
+        this._ui = ui;
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.id = counter++;
@@ -73,21 +73,21 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
-                multiplayer.playerGrid.gridItems[row][col].setOpaque(false);
-                multiplayer.playerGrid.gridItems[row][col].repaint();
+                _ui.playerGrid.gridItems[row][col].setOpaque(false);
+                _ui.playerGrid.gridItems[row][col].repaint();
             }
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        int xGrid = multiplayer.playerGrid.getBounds().x;
-        int yGrid = multiplayer.playerGrid.getBounds().y;
+        int xGrid = _ui.playerGrid.getBounds().x;
+        int yGrid = _ui.playerGrid.getBounds().y;
         int xShip = Ship.this.getBounds().x;
         int yShip = Ship.this.getBounds().y;
 
 
-        multiplayer.playerGrid.checkIfOverLabel(Ship.this);
+        _ui.playerGrid.checkIfOverLabel(Ship.this);
         checkCollisions(Ship.this);
 
         int x = e.getXOnScreen() - getParent().getLocationOnScreen().x - getWidth() / 2;
@@ -98,7 +98,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
         x = Math.max(0, Math.min(x, maxX));
         y = Math.max(0, Math.min(y, maxY));
 
-        if (multiplayer.playerGrid.checkIfOverLabel(Ship.this) > 0 || xShip > xGrid - 54 && xShip < xGrid + 594 && yShip > yGrid - 54 && yShip < yGrid + 594)
+        if (_ui.playerGrid.checkIfOverLabel(Ship.this) > 0 || xShip > xGrid - 54 && xShip < xGrid + 594 && yShip > yGrid - 54 && yShip < yGrid + 594)
             setLocation((Math.round((float) x / 54) * 54) - 14, (Math.round((float) y / 54) * 54) - 23);
         else {
             setLocation(x, y);
@@ -107,9 +107,9 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
     public void checkCollisions(Ship draggingShip) {
         int counter = 0;
-        final int totalShips = multiplayer.ships.length;
+        final int totalShips = _ui.ships.length;
 
-        for (Ship ship : multiplayer.ships) {
+        for (Ship ship : _ui.ships) {
             if (ship != draggingShip && checkCollision(draggingShip, ship)) {
                 System.out.println("Collision detected");
                 this.collided = true;
