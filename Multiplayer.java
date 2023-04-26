@@ -13,7 +13,7 @@ public class Multiplayer extends JFrame {
 
 
         c.add(mainPanel);
-
+        setMinimumSize(new Dimension(1700,800));
         pack();
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

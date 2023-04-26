@@ -4,8 +4,7 @@ import java.awt.*;
 public class Singleplayer extends JFrame {
     //    Background image panel
     UI mainPanel = new UI();
-
-
+    //TODO: facile (random) difficile (mirato)
     public Singleplayer() {
         Container c = getContentPane();
 

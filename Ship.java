@@ -6,6 +6,8 @@ import java.awt.event.MouseMotionListener;
 import java.util.HashSet;
 
 public class Ship extends JLabel implements MouseListener, MouseMotionListener {
+    //TODO:decremento counterPositioned al riposizionamento di una singola barca
+    static int counterPositioned=0;
     static int counter = 0;
     UI _ui;
     int id, size, defaultX, defaultY;
@@ -43,6 +45,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     public void resetPosition() {
         this.setLocation(defaultX, defaultY);
         this.positioned = false;
+        counterPositioned=0;
     }
 
     public int getShipSize() {
@@ -57,6 +60,12 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+
+        if(counterPositioned==5){
+            System.out.println("ciao");
+            _ui.addPlayGameButton();
+        }
+        System.out.println("counter"+counterPositioned);
         setCursor(Cursor.getDefaultCursor());
         System.out.printf("Ship %d (%d blocks, %c) released at: %d, %d%n", id, size, orientation, this.getX(), this.getY());
 
@@ -75,6 +84,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
                 gridItem.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
                 selectedCells.add(gridItem);
             }
+            counterPositioned++;
         }
 
         if (collided || !validPosition) {

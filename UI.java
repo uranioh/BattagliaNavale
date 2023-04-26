@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class UI extends JLabel {
+public class UI extends backgroundPainter {
 
     JLabel playGameLabelIcon = new JLabel("");
     JLabel playGameText= new JLabel("Gioca");
@@ -20,7 +20,8 @@ public class UI extends JLabel {
     ImageIcon playButtonImage = new ImageIcon("assets/play-button.png");
 
     public UI() {
-        setIcon(bg);
+
+
 
 //        Reset button properties
         resetShips_Button.setIcon(resetShips_Icon);
@@ -45,24 +46,27 @@ public class UI extends JLabel {
         enemyGrid = new Grid(bg.getIconWidth() / 2 + 100, bg.getIconHeight() / 2 - 594 / 2, 594, 594);
         add(enemyGrid);
 
-        addPlayGameButton();
     }
     public void addPlayGameButton(){
-        playGame.setLayout(new BoxLayout(playGame,BoxLayout.X_AXIS));
-        playGame.setBorder(new roundedBorder(80));
+        //playGame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        playGame.setLayout(null);
+        playGame.setBorder(new roundedBorder(200));
         playGame.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5,true));
         playGame.setContentAreaFilled(false);
         playGame.setFocusPainted(false);
         playGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        playGame.setBounds(1455, 900, 200, 55);
+        playGame.setBounds(1455, 900, 150, 50);
         playGame.setForeground(Color.white);
         playGameText.setForeground(Color.white);
         playGameLabelIcon.setIcon(playButtonImage);
         playGameText.setFont(new Font("Arial", Font.BOLD, 23));
-
+        playGameText.setBounds(30,15,80,20);
+        playGameLabelIcon.setBounds(100,13,playGameLabelIcon.getIcon().getIconWidth(),playGameLabelIcon.getIcon().getIconHeight());
         playGame.add(playGameText);
         playGame.add(playGameLabelIcon);
         add(playGame);
+        this.revalidate();
+        this.repaint();
     }
 
     public void setShips() {
