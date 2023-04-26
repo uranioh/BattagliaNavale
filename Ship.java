@@ -8,7 +8,7 @@ import java.util.HashSet;
 public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     static int counter = 0;
     UI _ui;
-    int id, size;
+    int id, size, defaultX, defaultY;
     char orientation;
 
     boolean collided = false;
@@ -32,6 +32,17 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
             size = Math.round((float) this.getHeight() / 50);
             orientation = 'v';
         }
+    }
+
+    public void setDefaultPosition(int x, int y) {
+        this.defaultX = x;
+        this.defaultY = y;
+        this.setLocation(x, y);
+    }
+
+    public void resetPosition() {
+        this.setLocation(defaultX, defaultY);
+        this.positioned = false;
     }
 
     public int getShipSize() {
@@ -68,7 +79,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
         if (collided || !validPosition) {
             System.out.println("Ship collided or placed to invalid position");
-            this.setLocation(0, 0);
+            this.resetPosition();
         }
 
         for (int row = 0; row < 10; row++) {

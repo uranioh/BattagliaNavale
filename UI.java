@@ -5,15 +5,16 @@ public class UI extends JLabel {
     Grid playerGrid, enemyGrid;
 
     //    Array of ships and their background
-    Ship[] ships = new Ship[8];
-    JLabel[] ships_bg = new JLabel[8];
+    Ship[] ships = new Ship[6];
+    JLabel[] ships_bg = new JLabel[6];
 
     JButton resetShips_Button = new JButton();
     ImageIcon resetShips_Icon = new ImageIcon("assets/icona_reset.png");
 
     //    Various icons
     ImageIcon bg = new ImageIcon("assets/background.jpg");
-    public UI(){
+
+    public UI() {
         setIcon(bg);
 
 //        Reset button properties
@@ -38,25 +39,36 @@ public class UI extends JLabel {
         add(enemyGrid);
 
 
-
     }
+
     public void setShips() {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 6; i++) {
             ships[i] = new Ship(this);
             ships[i].setIcon(new ImageIcon(String.format("ships/%d.png", i)));
+            ships[i].setSize(ships[i].getIcon().getIconWidth(), ships[i].getIcon().getIconHeight());
 
             ships_bg[i] = new JLabel();
             ships_bg[i].setIcon(new ImageIcon(String.format("ships_bg/%d.png", i)));
+            ships_bg[i].setSize(ships_bg[i].getIcon().getIconWidth(), ships_bg[i].getIcon().getIconHeight());
         }
 
-        resetShips();
+//        Horizontal ships
+        for (int i = 0; i < 3; i++) {
+            ships[i].setDefaultPosition(100, 150 + i * 50);
+            ships_bg[i].setBounds(100, 150 + i * 50, ships_bg[i].getIcon().getIconWidth(), ships_bg[i].getIcon().getIconHeight());
+        }
 
+//        Vertical ships
+        for (int i = 3; i < 6; i++) {
+            ships[i].setDefaultPosition(100 + (i - 3) * 50, 350);
+            ships_bg[i].setBounds(100 + (i - 3) * 50, 350, ships_bg[i].getIcon().getIconWidth(), ships_bg[i].getIcon().getIconHeight());
+        }
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 6; i++) {
             add(ships[i]);
             ships[i].setProperties();
         }
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 6; i++) {
             add(ships_bg[i]);
         }
     }
@@ -67,29 +79,7 @@ public class UI extends JLabel {
                 gridItem.setBorder(null);
             }
             s.selectedCells.clear();
+            s.resetPosition();
         }
-
-        ships[0].setBounds(100, 68, 266, 50);
-        ships[1].setBounds(100, 128, 212, 50);
-        ships[2].setBounds(100, 190, 158, 50);
-        ships[3].setBounds(100, 250, 104, 50);
-
-        ships[4].setBounds(100, 337, 50, 266);
-        ships[6].setBounds(100, 625, 50, 104);
-        ships[7].setBounds(170, 517, 50, 212);
-        ships[5].setBounds(170, 334, 50, 158);
-
-        ships_bg[0].setBounds(100, 68, 258, 45);
-        ships_bg[1].setBounds(100, 128, 206, 45);
-        ships_bg[2].setBounds(100, 190, 154, 45);
-        ships_bg[3].setBounds(100, 250, 99, 37);
-
-        ships_bg[4].setBounds(100, 337, 45, 258);
-        ships_bg[6].setBounds(100, 625, 37, 99);
-
-        ships_bg[7].setBounds(170, 517, 45, 206);
-        ships_bg[5].setBounds(170, 334, 45, 154);
     }
 }
-
-
