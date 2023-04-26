@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UI extends JLabel {
+
+    JLabel playGameIcon= new JLabel("njcsnc");
+    JLabel playGameText= new JLabel("njcsnc");
     Grid playerGrid, enemyGrid;
 
     //    Array of ships and their background
@@ -9,6 +12,7 @@ public class UI extends JLabel {
     JLabel[] ships_bg = new JLabel[6];
 
     JButton resetShips_Button = new JButton();
+    JButton playGame = new JButton();
     ImageIcon resetShips_Icon = new ImageIcon("assets/icona_reset.png");
 
     //    Various icons
@@ -28,6 +32,8 @@ public class UI extends JLabel {
         add(resetShips_Button);
 
 
+
+
         setShips();
 
 //        Player grid
@@ -38,7 +44,21 @@ public class UI extends JLabel {
         enemyGrid = new Grid(bg.getIconWidth() / 2 + 100, bg.getIconHeight() / 2 - 594 / 2, 594, 594);
         add(enemyGrid);
 
-
+        addPlayGameButton();
+    }
+    public void addPlayGameButton(){
+        playGame.setLayout(new FlowLayout());
+        playGame.setBorder(new roundedBorder(80));
+        playGame.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5,true));
+        playGame.setContentAreaFilled(false);
+        playGame.setFocusPainted(false);
+        //playGame.setFont(new Font("Arial", Font.BOLD, 28));
+        playGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        playGame.setBounds(1455, 900, 200, 55);
+        playGame.setForeground(Color.white);
+        playGame.add(playGameText);
+        playGame.add(playGameIcon);
+        add(playGame);
     }
 
     public void setShips() {
