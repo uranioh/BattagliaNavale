@@ -6,7 +6,7 @@ import java.util.Set;
 public class Grid extends JLabel {
     static Set<GridItem> selectedCells;
 
-    ImageIcon gridBackground = new ImageIcon("assets/grid.png");
+    ImageIcon gridBackground = new ImageIcon("src/assets/grid.png");
     GridItem[][] gridItems = new GridItem[10][10];
 
 

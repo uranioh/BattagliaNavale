@@ -6,7 +6,7 @@ public class backgroundPainter extends JPanel {
 
     public backgroundPainter() {
         // Carica l'immagine di sfondo
-        backgroundImage = new ImageIcon("assets/background.jpg").getImage();
+        backgroundImage = new ImageIcon("src/assets/background.jpg").getImage();
         setLayout(null);
     }
 

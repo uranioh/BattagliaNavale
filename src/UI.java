@@ -13,11 +13,11 @@ public class UI extends backgroundPainter {
 
     JButton resetShips_Button = new JButton();
     JButton playGame = new JButton();
-    ImageIcon resetShips_Icon = new ImageIcon("assets/icona_reset.png");
+    ImageIcon resetShips_Icon = new ImageIcon("src/assets/icona_reset.png");
 
     //    Various icons
-    ImageIcon bg = new ImageIcon("assets/background.jpg");
-    ImageIcon playButtonImage = new ImageIcon("assets/play-button.png");
+    ImageIcon bg = new ImageIcon("src/assets/background.jpg");
+    ImageIcon playButtonImage = new ImageIcon("src/assets/play-button.png");
 
     public UI() {
 
@@ -70,11 +70,11 @@ public class UI extends backgroundPainter {
     public void setShips() {
         for (int i = 0; i < 6; i++) {
             ships[i] = new Ship(this);
-            ships[i].setIcon(new ImageIcon(String.format("ships/%d.png", i)));
+            ships[i].setIcon(new ImageIcon(String.format("src/ships/%d.png", i)));
             ships[i].setSize(ships[i].getIcon().getIconWidth(), ships[i].getIcon().getIconHeight());
 
             ships_bg[i] = new JLabel();
-            ships_bg[i].setIcon(new ImageIcon(String.format("ships_bg/%d.png", i)));
+            ships_bg[i].setIcon(new ImageIcon(String.format("src/ships_bg/%d.png", i)));
             ships_bg[i].setSize(ships_bg[i].getIcon().getIconWidth(), ships_bg[i].getIcon().getIconHeight());
         }
 
