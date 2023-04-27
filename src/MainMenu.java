@@ -29,10 +29,10 @@ public class MainMenu extends JFrame {
 
         createBottom(c,this);
 
-
+        setMinimumSize(new Dimension(1920,1080));
         c.add(mainPanel);
         c.setLayout(new FlowLayout());
-        pack();
+        setResizable(true);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,12 +111,17 @@ public class MainMenu extends JFrame {
         locale.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Rimuoviamo il pannello mainPanel dal content pane
                 c.remove(mainPanel);
+                c.setLayout(new BorderLayout());
+                // Aggiungiamo il pannello _ui al content pane al centro
+                c.add(_ui, BorderLayout.CENTER);
                 frame.revalidate();
                 frame.repaint();
-
             }
         });
+
+
 
     }
 
