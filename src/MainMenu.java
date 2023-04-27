@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainMenu extends JFrame {
     JLabel gameTitle = new JLabel("BATTAGLIA NAVALE");
@@ -14,6 +16,7 @@ public class MainMenu extends JFrame {
     JButton account = new JButton("ACCOUNT");
     JButton impostazioni = new JButton("IMPOSTAZIONI");
     ImageIcon bg = new ImageIcon("src/assets/background.jpg");
+    UI _ui = new UI();
 
 
     public MainMenu() {
@@ -24,7 +27,7 @@ public class MainMenu extends JFrame {
         gameTitle.setForeground(Color.WHITE);
         gameTitle.setFont(new Font("Arial", Font.BOLD, 70));
 
-        createBottom();
+        createBottom(c,this);
 
 
         c.add(mainPanel);
@@ -35,7 +38,7 @@ public class MainMenu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void createBottom() {
+    public void createBottom(Container c,MainMenu frame) {
         localePanel.add(locale);
         onlinePanel.add(online);
         accountPanel.add(account);
@@ -102,9 +105,18 @@ public class MainMenu extends JFrame {
         impostazioni.setFocusPainted(false);
 
         bottom.setLayout(new FlowLayout());
-        bottom.setBounds(655, 620, 600, 250);
+        bottom.setBounds(655, 500, 600, 250);
         bottom.setOpaque(false);
         mainPanel.add(bottom);
+        locale.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.remove(mainPanel);
+                frame.revalidate();
+                frame.repaint();
+
+            }
+        });
 
     }
 
