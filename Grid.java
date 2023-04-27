@@ -10,7 +10,6 @@ public class Grid extends JLabel {
     GridItem[][] gridItems = new GridItem[10][10];
 
 
-
     public Grid(int posX, int posY, int width, int height) {
         int gapSize = 4;
         int col_increment = gapSize;
@@ -55,17 +54,12 @@ public class Grid extends JLabel {
                         gridItem.setState(true);
                         gridItem.setBackground(new Color(0, 0, 0, 0.5f));
                         gridItem.setOpaque(true);
-
-                        System.out.println("Ship " + ship.id + " is over grid cell: " + gridItem.getRelativeX() + ", " + gridItem.getRelativeY());
                     }
                 } else if (selectedCells.size() == ship.getShipSize()) {
-                    System.out.println("lmao all boat in grid");
                     ship.validPosition = true;
                     gridItem.setState(false);
                     gridItem.setOpaque(false);
-                }
-
-                else {
+                } else {
                     selectedCells.remove(gridItem); // Remove the panel from the set of selected cells
                     ship.validPosition = false;
                     gridItem.setState(false);

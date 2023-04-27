@@ -6,24 +6,31 @@ import java.awt.event.MouseMotionListener;
 import java.util.HashSet;
 
 public class Ship extends JLabel implements MouseListener, MouseMotionListener {
-    //TODO:decremento counterPositioned al riposizionamento di una singola barca
-    static int counterPositioned=0;
-    static int counter = 0;
-    UI _ui;
-    int id, size, defaultX, defaultY;
-    char orientation;
+//    counters
+    private static int currentIDCounter = 0;
+    public static int placedCounter = 0;
 
-    boolean collided = false;
-    boolean validPosition = false;
-    boolean positioned = false;
+//    import UI
+    private final UI _ui;
 
-    HashSet<GridItem> selectedCells = new HashSet<>();
+//    ship properties
+    private final int id;
+    private int defaultX, defaultY, size;
+    private char orientation;
+
+//    ship states
+    private boolean collided = false;
+    public boolean validPosition = false;
+    private boolean positioned = false;
+
+//    cells selected by the ship
+    public HashSet<GridItem> selectedCells = new HashSet<>();
 
     public Ship(UI ui) {
         this._ui = ui;
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
-        this.id = counter++;
+        this.id = currentIDCounter++;
     }
 
     public void setProperties() {
@@ -45,7 +52,6 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     public void resetPosition() {
         this.setLocation(defaultX, defaultY);
         this.positioned = false;
-        counterPositioned=0;
     }
 
     public int getShipSize() {
@@ -60,16 +66,11 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
-        if(counterPositioned==5){
-            System.out.println("ciao");
-            _ui.addPlayGameButton();
-        }
-        System.out.println("counter"+counterPositioned);
         setCursor(Cursor.getDefaultCursor());
         System.out.printf("Ship %d (%d blocks, %c) released at: %d, %d%n", id, size, orientation, this.getX(), this.getY());
 
         if (positioned) {
+            placedCounter--;
             System.out.println("Ship already placed - moving to new position");
             for (GridItem gridItem : selectedCells) {
                 gridItem.setBorder(null);
@@ -78,13 +79,13 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
         }
 
         if (validPosition && !collided) {
+            placedCounter++;
             System.out.println("Ship placed to valid position");
             positioned = true;
             for (GridItem gridItem : Grid.selectedCells) {
                 gridItem.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
                 selectedCells.add(gridItem);
             }
-            counterPositioned++;
         }
 
         if (collided || !validPosition) {
@@ -97,6 +98,16 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
                 _ui.playerGrid.gridItems[row][col].setOpaque(false);
                 _ui.playerGrid.gridItems[row][col].repaint();
             }
+        }
+
+        System.out.println("Placed: " + placedCounter);
+        if (placedCounter == 6) {
+            System.out.println("ciao");
+            _ui.addPlayGameButton();
+        } else {
+            _ui.remove(_ui.playGame);
+            _ui.revalidate();
+            _ui.repaint();
         }
     }
 
@@ -132,12 +143,10 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
         for (Ship ship : _ui.ships) {
             if (ship != draggingShip && checkCollision(draggingShip, ship)) {
-                System.out.println("Collision detected");
                 this.collided = true;
             } else {
                 counter++;
                 if (counter == totalShips) {
-                    System.out.println("No collision detected");
                     this.collided = false;
                 }
             }

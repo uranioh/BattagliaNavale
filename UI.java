@@ -4,7 +4,7 @@ import java.awt.*;
 public class UI extends backgroundPainter {
 
     JLabel playGameLabelIcon = new JLabel("");
-    JLabel playGameText= new JLabel("Gioca");
+    JLabel playGameText = new JLabel("Gioca");
     Grid playerGrid, enemyGrid;
 
     //    Array of ships and their background
@@ -22,7 +22,6 @@ public class UI extends backgroundPainter {
     public UI() {
 
 
-
 //        Reset button properties
         resetShips_Button.setIcon(resetShips_Icon);
         resetShips_Button.setBorderPainted(false);
@@ -32,8 +31,6 @@ public class UI extends backgroundPainter {
         resetShips_Button.setBounds(120, 770, 50, 50);
         resetShips_Button.addActionListener(e -> resetShips());
         add(resetShips_Button);
-
-
 
 
         setShips();
@@ -47,11 +44,12 @@ public class UI extends backgroundPainter {
         add(enemyGrid);
 
     }
-    public void addPlayGameButton(){
+
+    public void addPlayGameButton() {
         //playGame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         playGame.setLayout(null);
         playGame.setBorder(new roundedBorder(200));
-        playGame.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5,true));
+        playGame.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5, true));
         playGame.setContentAreaFilled(false);
         playGame.setFocusPainted(false);
         playGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -60,8 +58,8 @@ public class UI extends backgroundPainter {
         playGameText.setForeground(Color.white);
         playGameLabelIcon.setIcon(playButtonImage);
         playGameText.setFont(new Font("Arial", Font.BOLD, 23));
-        playGameText.setBounds(30,15,80,20);
-        playGameLabelIcon.setBounds(100,13,playGameLabelIcon.getIcon().getIconWidth(),playGameLabelIcon.getIcon().getIconHeight());
+        playGameText.setBounds(30, 15, 80, 20);
+        playGameLabelIcon.setBounds(100, 13, playGameLabelIcon.getIcon().getIconWidth(), playGameLabelIcon.getIcon().getIconHeight());
         playGame.add(playGameText);
         playGame.add(playGameLabelIcon);
         add(playGame);
@@ -109,5 +107,10 @@ public class UI extends backgroundPainter {
             s.selectedCells.clear();
             s.resetPosition();
         }
+        Ship.placedCounter = 0;
+
+        this.remove(playGame);
+        this.revalidate();
+        this.repaint();
     }
 }
