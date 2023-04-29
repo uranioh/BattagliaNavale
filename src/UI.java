@@ -9,7 +9,7 @@ public class UI extends backgroundPainter {
 
     JLabel playGameLabelIcon = new JLabel("");
     JLabel playGameText = new JLabel("Gioca");
-    Grid playerGrid, enemyGrid;
+    Grid playerGrid,enemyGrid;
 
     //    Array of ships and their background
     Ship[] ships = new Ship[6];
@@ -45,6 +45,7 @@ public class UI extends backgroundPainter {
 
 //        Enemy grid
         enemyGrid = new Grid(bg.getIconWidth() / 2 + 100, bg.getIconHeight() / 2 - 594 / 2, 594, 594);
+
         add(enemyGrid);
         AddListenerPlayGameButton(this);
 
@@ -92,7 +93,6 @@ public class UI extends backgroundPainter {
                 gridPanel.add(playerGrid);
                 gridPanel.add(enemyGrid);
                 playerGrid.setPreferredSize(new Dimension(playerGrid.getIcon().getIconWidth(),playerGrid.getIcon().getIconHeight()));
-                _ui.setMinimumSize(new Dimension(1200,700));
                 revalidate();
                 repaint();
             }
