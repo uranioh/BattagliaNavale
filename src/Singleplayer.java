@@ -3,6 +3,6 @@ public class Singleplayer extends UI {
 
     public Singleplayer(MainFrame frame) {
         this.frame=frame;
-       this.playGameTitle.setText("singleplayer");
+        this.playGameTitle.setText("singleplayer");
     }
 }

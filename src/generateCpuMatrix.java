@@ -1,24 +1,53 @@
 import java.util.Random;
 
-public class test {
+public class generateCpuMatrix {
     int gridDimension=10;
     int[][] mat= new int[gridDimension][gridDimension];
     int[][] mat2= new int[gridDimension][gridDimension];
 
     Random rand= new Random();
-    public test (){
+    public generateCpuMatrix(){
 
         //0 su, 1 destra, 2 giù, 3 sinistra
-        //choose= rand.nextInt(0,4);
-        //rifare reset
+
+
+        resetMat(mat2);
         resetMat(mat);
+        mat2to1();
         printMat(mat);
 
-        upControl(2);
+        generateShip(5);
+        generateShip(5);
+        generateShip(4);
+        generateShip(4);
+        generateShip(2);
+        generateShip(2);
+
 
 
         printMat(mat);
 
+    }
+    public void generateShip(int lenght){
+        int choose=0;
+        choose= rand.nextInt(0,4);
+        switch (choose){
+            case 0:
+                upControl(lenght);
+                break;
+            case 1:
+                rightControl(lenght);
+                break;
+            case 2:
+                downControl(lenght);
+                break;
+            case 3:
+                leftControl(lenght);
+                break;
+            default:
+                System.out.println("errore scelta generazione cpu barche");
+                break;
+        }
     }
     public void resetMat(int mat[][]){
         for (int row=0; row<gridDimension; row++){
@@ -27,10 +56,17 @@ public class test {
             }
         }
     }
-    public void saveMat(){
+    public void mat1to2(){
         for (int row=0; row<gridDimension; row++){
             for (int col=0; col<gridDimension; col++){
                 mat2[row][col]=mat[row][col];
+            }
+        }
+    }
+    public void mat2to1(){
+        for (int row=0; row<gridDimension; row++){
+            for (int col=0; col<gridDimension; col++){
+                mat[row][col]=mat2[row][col];
             }
         }
     }
@@ -81,7 +117,10 @@ public class test {
                 result=1;
             }
             if(result==1){
-                resetMat(mat);
+                mat2to1();
+            }
+            else{
+                mat1to2();
             }
         }while (result!=0);
     }
@@ -122,7 +161,10 @@ public class test {
             }
 
             if(result==1){
-                resetMat(mat);
+                mat2to1();
+            }
+            else{
+                mat1to2();
             }
         }while (result!=0);
     }
@@ -162,7 +204,10 @@ public class test {
             }
 
             if(result==1){
-                resetMat(mat);
+                mat2to1();
+            }
+            else{
+                mat1to2();
             }
         }while (result!=0);
     }
@@ -202,7 +247,10 @@ public class test {
                 result=1;
             }
             if(result==1){
-                resetMat(mat);
+                mat2to1();
+            }
+            else{
+                mat1to2();
             }
         }while (result!=0);
     }
