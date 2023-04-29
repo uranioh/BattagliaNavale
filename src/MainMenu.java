@@ -29,7 +29,7 @@ public class MainMenu extends JFrame {
 
         createBottom(c,this);
 
-        setMinimumSize(new Dimension(1920,1080));
+        setMinimumSize(new Dimension(1000,800));
         c.add(mainPanel);
         c.setLayout(new FlowLayout());
         setResizable(true);
@@ -115,6 +115,7 @@ public class MainMenu extends JFrame {
                 c.remove(mainPanel);
                 c.setLayout(new BorderLayout());
                 // Aggiungiamo il pannello _ui al content pane al centro
+                frame.setMinimumSize(new Dimension(1700,1000));
                 c.add(_ui, BorderLayout.CENTER);
                 frame.revalidate();
                 frame.repaint();

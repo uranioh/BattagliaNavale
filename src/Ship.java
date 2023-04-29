@@ -67,7 +67,9 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         setCursor(Cursor.getDefaultCursor());
-        System.out.printf("Ship %d (%d blocks, %c) released at: %d, %d%n", id, size, orientation, this.getX(), this.getY());
+        System.out.println("posizione grid"+_ui.playerGrid.getX());
+        //System.out.printf("Ship grid %d (%d blocks, %c) released at: %d, %d%n", id, size, orientation, (_ui.playerGrid.getX()-this.getX()+4)*-1, (_ui.playerGrid.getY()-this.getY()+4)*-1);
+        System.out.printf("Ship  %d (%d blocks, %c) released at: %d, %d%n", id, size, orientation, this.getX(), this.getY());
 
         if (positioned) {
             placedCounter--;
@@ -103,7 +105,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
         System.out.println("Placed: " + placedCounter);
         if (placedCounter == 6) {
             System.out.println("ciao");
-            _ui.addPlayGameButton();
+            _ui.addPlayGameButton(_ui);
         } else {
             _ui.remove(_ui.playGame);
             _ui.revalidate();

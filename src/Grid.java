@@ -72,6 +72,14 @@ public class Grid extends JLabel {
 
         return selectedCells.size();
     }
+    public void resetGridItemBorder(){
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                gridItems[row][col].setBorder(null);
+
+            }
+        }
+    }
 
 
 }
