@@ -1,30 +1,43 @@
 import java.util.Random;
 
 public class test {
-    int[][] mat= new int[10][10];
+    int gridDimension=10;
+    int[][] mat= new int[gridDimension][gridDimension];
+    int[][] mat2= new int[gridDimension][gridDimension];
+
     Random rand= new Random();
     public test (){
 
         //0 su, 1 destra, 2 giù, 3 sinistra
         //choose= rand.nextInt(0,4);
         //rifare reset
-        resetMat();
-        printMat();
+        resetMat(mat);
+        printMat(mat);
+
         upControl(2);
-        printMat();
+
+
+        printMat(mat);
 
     }
-    public void resetMat(){
-        for (int row=0; row<10; row++){
-            for (int col=0; col<10; col++){
+    public void resetMat(int mat[][]){
+        for (int row=0; row<gridDimension; row++){
+            for (int col=0; col<gridDimension; col++){
                 mat[row][col]=0;
             }
         }
     }
-    public void printMat(){
+    public void saveMat(){
+        for (int row=0; row<gridDimension; row++){
+            for (int col=0; col<gridDimension; col++){
+                mat2[row][col]=mat[row][col];
+            }
+        }
+    }
+    public void printMat(int mat[][]){
         System.out.println();
-        for (int row=0; row<10; row++){
-            for (int col=0; col<10; col++){
+        for (int row=0; row<gridDimension; row++){
+            for (int col=0; col<gridDimension; col++){
                 System.out.print(mat[row][col]+"\t");
             }
             System.out.println();
@@ -39,11 +52,10 @@ public class test {
 
         do {
             do{
-                x=rand.nextInt(0,10);
-                y=rand.nextInt(0,10);
+                x=rand.nextInt(0,gridDimension);
+                y=rand.nextInt(0,gridDimension);
             }while (mat[x][y]!=0);
 
-            System.out.println(x);
             mat[x][y]=num;
             result=0;
             t=0;
@@ -69,12 +81,11 @@ public class test {
                 result=1;
             }
             if(result==1){
-                resetMat();
+                resetMat(mat);
             }
         }while (result!=0);
     }
     public void rightControl(int num){
-        int gridDimension=9;
         int t=0;
         int result=0;
         boolean orientation;
@@ -83,14 +94,14 @@ public class test {
 
         do {
             do{
-                x=rand.nextInt(0,10);
-                y=rand.nextInt(0,10);
+                x=rand.nextInt(0,gridDimension);
+                y=rand.nextInt(0,gridDimension);
             }while (mat[x][y]!=0);
 
             mat[x][y]=num;
             result=0;
             t=0;
-            if(y+num-1<10){
+            if(y+num-1<gridDimension){
                 int c=y+num;
                 for (int i=y+1; i<c; i++){
                     if(mat[x][i]!=0){
@@ -111,12 +122,11 @@ public class test {
             }
 
             if(result==1){
-                resetMat();
+                resetMat(mat);
             }
         }while (result!=0);
     }
     public void leftControl(int num){
-        int gridDimension=9;
         int t=0;
         int result=0;
         boolean orientation;
@@ -125,8 +135,8 @@ public class test {
 
         do {
             do{
-                x=rand.nextInt(0,10);
-                y=rand.nextInt(0,10);
+                x=rand.nextInt(0,gridDimension);
+                y=rand.nextInt(0,gridDimension);
             }while (mat[x][y]!=0);
 
             mat[x][y]=num;
@@ -152,7 +162,7 @@ public class test {
             }
 
             if(result==1){
-                resetMat();
+                resetMat(mat);
             }
         }while (result!=0);
     }
@@ -165,13 +175,14 @@ public class test {
 
         do {
             do{
-                x=rand.nextInt(0,10);
-                y=rand.nextInt(0,10);
+                x=rand.nextInt(0,gridDimension);
+                y=rand.nextInt(0,gridDimension);
             }while (mat[x][y]!=0);
+
             mat[x][y]=num;
             result=0;
             t=0;
-            if(x+num-1<10){
+            if(x+num-1<gridDimension){
                 for(int i=x+1; i<x+num;i++){
                     if(mat[i][y]!=0){
                         t=1;
@@ -191,7 +202,7 @@ public class test {
                 result=1;
             }
             if(result==1){
-                resetMat();
+                resetMat(mat);
             }
         }while (result!=0);
     }
