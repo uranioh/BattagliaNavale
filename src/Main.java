@@ -9,12 +9,8 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        //MainFrame window = new MainFrame();
-
-
-
-
-        generateCpuMatrix t=new generateCpuMatrix();
+        new MainFrame();
+        new generateCpuMatrix();
     }
 
 }

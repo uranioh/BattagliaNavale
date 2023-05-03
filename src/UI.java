@@ -4,12 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UI extends backgroundPainter {
-    JPanel gridPanel =new JPanel();
-    JLabel playGameTitle = new JLabel("In attesa dell'avversario...",JLabel.CENTER);
+    JPanel gridPanel = new JPanel();
+    JLabel playGameTitle = new JLabel("In attesa dell'avversario...", JLabel.CENTER);
 
     JLabel playGameLabelIcon = new JLabel("");
     JLabel playGameText = new JLabel("Gioca");
-    Grid playerGrid,enemyGrid;
+    Grid playerGrid, enemyGrid;
 
     //    Array of ships and their background
     Ship[] ships = new Ship[6];
@@ -47,33 +47,32 @@ public class UI extends backgroundPainter {
         enemyGrid = new Grid(bg.getIconWidth() / 2 + 100, bg.getIconHeight() / 2 - 594 / 2, 594, 594);
 
         add(enemyGrid);
-        AddListenerPlayGameButton(this);
+        AddListenerPlayGameButton();
 
     }
-    public void AddListenerPlayGameButton(UI _ui){
+
+    public void AddListenerPlayGameButton() {
         playGame.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                for(int c=0; c<6;c++){
-                    int x=0;
-                    int y=0;
-                    x=(ships[c].getLocation().x-playerGrid.getLocation().x);
-                    y=(ships[c].getLocation().y-playerGrid.getLocation().y);
+                for (int c = 0; c < 6; c++) {
+                    int x = 0;
+                    int y = 0;
+                    x = (ships[c].getLocation().x - playerGrid.getLocation().x);
+                    y = (ships[c].getLocation().y - playerGrid.getLocation().y);
 
 
                     remove(ships[c]);
-                    ships[c].setBounds(x,y,ships[c].getIcon().getIconWidth(),ships[c].getIcon().getIconHeight());
+                    ships[c].setBounds(x, y, ships[c].getIcon().getIconWidth(), ships[c].getIcon().getIconHeight());
                     playerGrid.add(ships[c]);
 
                 }
                 playerGrid.resetGridItemBorder();
 
 
-
-
-                for(int i=0; i<6;i++){
+                for (int i = 0; i < 6; i++) {
                     remove(ships_bg[i]);
                 }
                 remove(resetShips_Button);
@@ -84,22 +83,22 @@ public class UI extends backgroundPainter {
                 setLayout(new BorderLayout());
 
                 gridPanel.setOpaque(false);
-                add(playGameTitle,BorderLayout.NORTH);
-                add(gridPanel,BorderLayout.SOUTH);
+                add(playGameTitle, BorderLayout.NORTH);
+                add(gridPanel, BorderLayout.SOUTH);
 
 
                 playGameTitle.setForeground(Color.WHITE);
                 playGameTitle.setFont(new Font("Arial", Font.BOLD, 40));
                 gridPanel.add(playerGrid);
                 gridPanel.add(enemyGrid);
-                playerGrid.setPreferredSize(new Dimension(playerGrid.getIcon().getIconWidth(),playerGrid.getIcon().getIconHeight()));
+                playerGrid.setPreferredSize(new Dimension(playerGrid.getIcon().getIconWidth(), playerGrid.getIcon().getIconHeight()));
                 revalidate();
                 repaint();
             }
         });
     }
 
-    public void addPlayGameButton(UI _ui) {
+    public void addPlayGameButton() {
         //playGame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         playGame.setLayout(null);
         playGame.setBorder(new roundedBorder(200));
@@ -168,7 +167,8 @@ public class UI extends backgroundPainter {
         this.revalidate();
         this.repaint();
     }
-    public void setEnemyGridClickable(){
+
+    public void setEnemyGridClickable() {
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
 

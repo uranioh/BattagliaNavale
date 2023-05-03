@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class backgroundPainter extends JPanel {
-    private Image backgroundImage;
+    private final Image backgroundImage;
 
     public backgroundPainter() {
         // Carica l'immagine di sfondo
@@ -16,7 +16,6 @@ public class backgroundPainter extends JPanel {
         // Disegna l'immagine di sfondo
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
-
 
 
 }

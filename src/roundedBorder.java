@@ -4,7 +4,7 @@ import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 
 public class roundedBorder extends AbstractBorder {
-    private int cornerRadius; // Raggio dell'arrotondamento
+    private final int cornerRadius; // Raggio dell'arrotondamento
 
     public roundedBorder(int cornerRadius) {
         this.cornerRadius = cornerRadius;

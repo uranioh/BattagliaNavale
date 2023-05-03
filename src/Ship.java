@@ -6,24 +6,24 @@ import java.awt.event.MouseMotionListener;
 import java.util.HashSet;
 
 public class Ship extends JLabel implements MouseListener, MouseMotionListener {
-//    counters
+    //    counters
     private static int currentIDCounter = 0;
     public static int placedCounter = 0;
 
-//    import UI
+    //    import UI
     private final UI _ui;
 
-//    ship properties
+    //    ship properties
     private final int id;
     private int defaultX, defaultY, size;
     private char orientation;
 
-//    ship states
+    //    ship states
     private boolean collided = false;
     public boolean validPosition = false;
     private boolean positioned = false;
 
-//    cells selected by the ship
+    //    cells selected by the ship
     public HashSet<GridItem> selectedCells = new HashSet<>();
 
     public Ship(UI ui) {
@@ -67,7 +67,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         setCursor(Cursor.getDefaultCursor());
-        System.out.println("posizione grid"+_ui.playerGrid.getX());
+        System.out.println("posizione grid" + _ui.playerGrid.getX());
         //System.out.printf("Ship grid %d (%d blocks, %c) released at: %d, %d%n", id, size, orientation, (_ui.playerGrid.getX()-this.getX()+4)*-1, (_ui.playerGrid.getY()-this.getY()+4)*-1);
         System.out.printf("Ship  %d (%d blocks, %c) released at: %d, %d%n", id, size, orientation, this.getX(), this.getY());
 
@@ -105,7 +105,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
         System.out.println("Placed: " + placedCounter);
         if (placedCounter == 6) {
             System.out.println("ciao");
-            _ui.addPlayGameButton(_ui);
+            _ui.addPlayGameButton();
         } else {
             _ui.remove(_ui.playGame);
             _ui.revalidate();
