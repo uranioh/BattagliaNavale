@@ -52,49 +52,44 @@ public class UI extends backgroundPainter {
     }
 
     public void AddListenerPlayGameButton() {
-        playGame.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                for (int c = 0; c < 6; c++) {
-                    int x = 0;
-                    int y = 0;
-                    x = (ships[c].getLocation().x - playerGrid.getLocation().x);
-                    y = (ships[c].getLocation().y - playerGrid.getLocation().y);
+        playGame.addActionListener(e -> {
+            for (int c = 0; c < 6; c++) {
+                int x = 0;
+                int y = 0;
+                x = (ships[c].getLocation().x - playerGrid.getLocation().x);
+                y = (ships[c].getLocation().y - playerGrid.getLocation().y);
 
 
-                    remove(ships[c]);
-                    ships[c].setBounds(x, y, ships[c].getIcon().getIconWidth(), ships[c].getIcon().getIconHeight());
-                    playerGrid.add(ships[c]);
+                remove(ships[c]);
+                ships[c].setBounds(x, y, ships[c].getIcon().getIconWidth(), ships[c].getIcon().getIconHeight());
+                playerGrid.add(ships[c]);
 
-                }
-                playerGrid.resetGridItemBorder();
-
-
-                for (int i = 0; i < 6; i++) {
-                    remove(ships_bg[i]);
-                }
-                remove(resetShips_Button);
-                remove(playGame);
-                remove(playerGrid);
-                remove(enemyGrid);
-
-                setLayout(new BorderLayout());
-
-                gridPanel.setOpaque(false);
-                add(playGameTitle, BorderLayout.NORTH);
-                add(gridPanel, BorderLayout.SOUTH);
-
-
-                playGameTitle.setForeground(Color.WHITE);
-                playGameTitle.setFont(new Font("Arial", Font.BOLD, 40));
-                gridPanel.add(playerGrid);
-                gridPanel.add(enemyGrid);
-                playerGrid.setPreferredSize(new Dimension(playerGrid.getIcon().getIconWidth(), playerGrid.getIcon().getIconHeight()));
-                revalidate();
-                repaint();
             }
+            playerGrid.resetGridItemBorder();
+
+
+            for (int i = 0; i < 6; i++) {
+                remove(ships_bg[i]);
+            }
+            remove(resetShips_Button);
+            remove(playGame);
+            remove(playerGrid);
+            remove(enemyGrid);
+
+            setLayout(new BorderLayout());
+
+            gridPanel.setOpaque(false);
+            add(playGameTitle, BorderLayout.NORTH);
+            add(gridPanel, BorderLayout.SOUTH);
+
+
+            playGameTitle.setForeground(Color.WHITE);
+            playGameTitle.setFont(new Font("Arial", Font.BOLD, 40));
+            gridPanel.add(playerGrid);
+            gridPanel.add(enemyGrid);
+            playerGrid.setPreferredSize(new Dimension(playerGrid.getIcon().getIconWidth(), playerGrid.getIcon().getIconHeight()));
+            revalidate();
+            repaint();
         });
     }
 

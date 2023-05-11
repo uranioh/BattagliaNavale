@@ -113,6 +113,7 @@ public class MainFrame extends JFrame {
         bottomPanel.setBounds(655, 500, 600, 250);
         bottomPanel.setOpaque(false);
         mainPanel.add(bottomPanel);
+
         localeButton.addActionListener(e -> newGame(singleplayerGame));
         onlineButton.addActionListener(e -> newGame(multiplayerGame));
     }

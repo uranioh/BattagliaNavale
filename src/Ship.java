@@ -9,7 +9,6 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     //    counters
     private static int currentIDCounter = 0;
     public static int placedCounter = 0;
-    public int length=0;
 
     //    import UI
     private final UI _ui;
@@ -32,12 +31,6 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.id = currentIDCounter++;
-    }
-    public void setLength(int length){
-        this.length=length;
-    }
-    public int gettLength(){
-        return this.length;
     }
 
     public void setProperties() {
@@ -83,6 +76,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
             //System.out.println("Ship already placed - moving to new position");
             for (GridItem gridItem : selectedCells) {
                 gridItem.setBorder(null);
+                gridItem.setLinkedShip(null);
             }
             selectedCells.clear();
         }
@@ -93,6 +87,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
             positioned = true;
             for (GridItem gridItem : Grid.selectedCells) {
                 gridItem.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
+                gridItem.setLinkedShip(this);
                 selectedCells.add(gridItem);
             }
         }
