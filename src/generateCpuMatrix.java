@@ -35,8 +35,7 @@ public class generateCpuMatrix {
     }
 
     public void generateShip(int lenght) {
-        int choose = 0;
-        choose = rand.nextInt(0, 4);
+        int choose = rand.nextInt(0, 4);
         switch (choose) {
             case 0 -> upControl(lenght);
             case 1 -> rightControl(lenght);
@@ -64,22 +63,8 @@ public class generateCpuMatrix {
         }
     }
 
-    public void printMat(int[][] mat) {
-        System.out.println();
-        for (int row = 0; row < gridDimension; row++) {
-            for (int col = 0; col < gridDimension; col++) {
-                System.out.print(mat[row][col] + "\t");
-            }
-            System.out.println();
-        }
-    }
-
     public void upControl(int num) {
-        int t = 0;
-        int result = 0;
-        boolean orientation;
-        int x = 0;
-        int y = 0;
+        int t, result, x, y;
 
         do {
             do {
@@ -102,7 +87,6 @@ public class generateCpuMatrix {
                 if (t == 0) {
                     for (int i = x; i < x + num - 1; i++) {
                         mat[i][y] = num;
-                        result = 0;
                     }
                 } else {
                     result = 1;
@@ -119,11 +103,7 @@ public class generateCpuMatrix {
     }
 
     public void rightControl(int num) {
-        int t = 0;
-        int result = 0;
-        boolean orientation;
-        int x = 0;
-        int y = 0;
+        int t, result, x, y;
 
         do {
             do {
@@ -162,11 +142,7 @@ public class generateCpuMatrix {
     }
 
     public void leftControl(int num) {
-        int t = 0;
-        int result = 0;
-        boolean orientation;
-        int x = 0;
-        int y = 0;
+        int t, result, x, y;
 
         do {
             do {
@@ -204,11 +180,7 @@ public class generateCpuMatrix {
     }
 
     public void downControl(int num) {
-        int t = 0;
-        int result = 0;
-        boolean orientation;
-        int x = 0;
-        int y = 0;
+        int t, result, x, y;
 
         do {
             do {

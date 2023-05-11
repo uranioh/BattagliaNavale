@@ -51,18 +51,15 @@ public class Grid extends JLabel {
                 if (shipBounds.intersects(compBounds)) {
                     if (ship.getShipSize() > selectedCells.size()) {
                         selectedCells.add(gridItem); // Add the panel to the set of selected cells
-                        gridItem.setState(true);
                         gridItem.setBackground(new Color(0, 0, 0, 0.5f));
                         gridItem.setOpaque(true);
                     }
                 } else if (selectedCells.size() == ship.getShipSize()) {
                     ship.validPosition = true;
-                    gridItem.setState(false);
                     gridItem.setOpaque(false);
                 } else {
                     selectedCells.remove(gridItem); // Remove the panel from the set of selected cells
                     ship.validPosition = false;
-                    gridItem.setState(false);
                     gridItem.setOpaque(false);
                 }
             }
@@ -82,6 +79,4 @@ public class Grid extends JLabel {
             }
         }
     }
-
-
 }

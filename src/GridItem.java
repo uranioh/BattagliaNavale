@@ -4,21 +4,16 @@ import java.awt.event.MouseListener;
 
 public class GridItem extends JLabel implements MouseListener {
     Singleplayer single;
-    public boolean state;
+
     private int x, y;
-    boolean statePlay=false;
+    boolean statePlay = false;
+
+//    gameplay attributes
+    private Ship linkedShip = null;
+    private boolean isAttacked = false;
 
     public GridItem() {
         this.addMouseListener(this);
-        state = false;
-    }
-
-    public boolean getState() {
-        return this.state;
-    }
-
-    public void setState(boolean state) {
-        this.state = state;
     }
 
     public void setRelativeX(int x) {
@@ -37,24 +32,42 @@ public class GridItem extends JLabel implements MouseListener {
         return this.y;
     }
 
-    public void setPlaying(boolean stateCommand){
-        statePlay=stateCommand;
+    public void setPlaying(boolean stateCommand) {
+        statePlay = stateCommand;
     }
-    public void addSingleplayer(Singleplayer single){
-        this.single=single;
+
+    public void addSingleplayer(Singleplayer single) {
+        this.single = single;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (statePlay){
+        if (statePlay) {
 //            System.out.println("X: " + x + " Y: " + y);
-            sendAttack( x,  y);
+            sendAttack(x, y);
         }
 
     }
-    public void sendAttack(int x, int y){
+
+    public void sendAttack(int x, int y) {
         single.sendAttack(x, y);
 
+    }
+
+    public void setLinkedShip(Ship ship) {
+        this.linkedShip = ship;
+    }
+
+    public Ship getLinkedShip() {
+        return this.linkedShip;
+    }
+
+    public void setAttacked() {
+        isAttacked = true;
+    }
+
+    public boolean isAttacked() {
+        return isAttacked;
     }
 
     @Override
