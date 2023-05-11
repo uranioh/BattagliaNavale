@@ -1,7 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class Singleplayer extends UI {
+    Random r = new Random();
+    private Timer timer;
+
+
     int explodedCells_Player = 0;
     int explodedCells_CPU = 0;
     ImageIcon explosion = new ImageIcon("src/assets/explosion.png");
@@ -92,7 +97,16 @@ public class Singleplayer extends UI {
                 enemyGrid.gridItems[x][y].setIcon(close);
             }
             enemyGrid.gridItems[x][y].setPlaying(false);
-            cpu.sendAttack();
+
+
+            enemyGrid.setGridStatus(false);
+            int delay = r.nextInt(1000, 5000);
+            timer = new Timer(delay, e -> {
+                cpu.sendAttack();
+                enemyGrid.setGridStatus(true);
+                timer.stop();
+            });
+            timer.start();
         }
 
     }

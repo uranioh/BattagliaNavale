@@ -75,7 +75,14 @@ public class Grid extends JLabel {
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
                 gridItems[row][col].setBorder(null);
+            }
+        }
+    }
 
+    public void setGridStatus(boolean t) {
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                gridItems[row][col].setPlaying(t);
             }
         }
     }
