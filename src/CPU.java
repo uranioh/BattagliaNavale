@@ -28,7 +28,7 @@ public class CPU {
                 y = rand.nextInt(0, 10);
 
 
-                if (single.playerGrid.gridItems[x][y].isAttacked()) {
+                if (Globals.playerGrid.gridItems[x][y].isAttacked()) {
                     status = true;
                 }
             } while (status);
@@ -37,12 +37,12 @@ public class CPU {
 
 
             if (response) {
-                single.playerGrid.gridItems[x][y].setIcon(explosion);
+                Globals.playerGrid.gridItems[x][y].setIcon(explosion);
             } else {
-                single.playerGrid.gridItems[x][y].setIcon(close);
+                Globals.playerGrid.gridItems[x][y].setIcon(close);
             }
 
-            single.playerGrid.gridItems[x][y].setAttacked();
+            Globals.playerGrid.gridItems[x][y].setAttacked();
         }
     }
 

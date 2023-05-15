@@ -99,8 +99,8 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
-                _ui.playerGrid.gridItems[row][col].setOpaque(false);
-                _ui.playerGrid.gridItems[row][col].repaint();
+                Globals.playerGrid.gridItems[row][col].setOpaque(false);
+                Globals.playerGrid.gridItems[row][col].repaint();
             }
         }
 
@@ -116,13 +116,13 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        int xGrid = _ui.playerGrid.getBounds().x;
-        int yGrid = _ui.playerGrid.getBounds().y;
+        int xGrid = Globals.playerGrid.getBounds().x;
+        int yGrid = Globals.playerGrid.getBounds().y;
         int xShip = Ship.this.getBounds().x;
         int yShip = Ship.this.getBounds().y;
 
 
-        _ui.playerGrid.checkIfOverLabel(Ship.this);
+        Globals.playerGrid.checkIfOverLabel(Ship.this);
         checkCollisions(Ship.this);
 
         int x = e.getXOnScreen() - getParent().getLocationOnScreen().x - getWidth() / 2;
@@ -133,7 +133,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
         x = Math.max(0, Math.min(x, maxX));
         y = Math.max(0, Math.min(y, maxY));
 
-        if (_ui.playerGrid.checkIfOverLabel(Ship.this) > 0 || xShip > xGrid - 54 && xShip < xGrid + 594 && yShip > yGrid - 54 && yShip < yGrid + 594)
+        if (Globals.playerGrid.checkIfOverLabel(Ship.this) > 0 || xShip > xGrid - 54 && xShip < xGrid + 594 && yShip > yGrid - 54 && yShip < yGrid + 594)
             setLocation((Math.round((float) x / 54) * 54) - 14, (Math.round((float) y / 54) * 54) - 23);
         else {
             setLocation(x, y);
@@ -142,9 +142,9 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
     public void checkCollisions(Ship draggingShip) {
         int counter = 0;
-        final int totalShips = _ui.ships.length;
+        final int totalShips = Globals.playerShips.length;
 
-        for (Ship ship : _ui.ships) {
+        for (Ship ship : Globals.playerShips) {
             if (ship != draggingShip && checkCollision(draggingShip, ship)) {
                 this.collided = true;
             } else {
