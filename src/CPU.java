@@ -4,15 +4,12 @@ import java.util.Random;
 public class CPU {
     ImageIcon explosion = new ImageIcon("src/assets/explosion.png");
     ImageIcon close = new ImageIcon("src/assets/prova.png");
-    GenerateCpuMatrix generate = new GenerateCpuMatrix();
     int difficulty;
-    int[][] mat;
     Random rand = new Random();
     Singleplayer player;
 
     public CPU(Singleplayer player) {
         this.player = player;
-        this.mat = generate.getMat();
         difficulty = 0;
     }
 
@@ -27,12 +24,14 @@ public class CPU {
                 x = rand.nextInt(0, 10);
                 y = rand.nextInt(0, 10);
 
-
+//                Avoids to attack the same cell twice
                 if (Globals.playerGrid.gridItems[x][y].isAttacked()) {
                     status = true;
                 }
+//                Repeat the cycle if the cell is already attacked
             } while (status);
 
+//            Check if the attack hit a ship
             boolean response = player.checkAttack(x, y);
 
 
@@ -47,6 +46,6 @@ public class CPU {
     }
 
     public boolean checkAttack(int x, int y) {
-        return mat[x][y] != 0;
+        return Globals.playerGrid.gridItems[x][y].getLinkedShip() != null;
     }
 }

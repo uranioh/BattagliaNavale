@@ -49,9 +49,7 @@ public class UI extends BackgroundPainter {
     }
 
     public void enablePlayButton() {
-        playGame.addActionListener(e -> {
-            playGame();
-        });
+        playGame.addActionListener(e -> playGame());
     }
 
     public void playGame() {
