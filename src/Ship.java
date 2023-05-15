@@ -7,14 +7,17 @@ import java.util.HashSet;
 
 public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     public static int placedCounter = 0;
+
     //    counters
     private static int currentIDCounter = 0;
+
     //    import UI
     private final UI _ui;
 
     //    ship properties
     private final int id;
     public boolean validPosition = false;
+
     //    cells selected by the ship
     public HashSet<GridItem> selectedCells = new HashSet<>();
     private int defaultX, defaultY, size;
@@ -103,7 +106,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
         //System.out.println("Placed: " + placedCounter);
         if (placedCounter == 6) {
-            _ui.addPlayGameButton();
+            _ui.addPlayButton();
         } else {
             _ui.remove(_ui.playGame);
             _ui.revalidate();
