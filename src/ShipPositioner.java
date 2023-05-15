@@ -17,13 +17,6 @@ public class ShipPositioner {
                 if (canPlaceShip(grid, ship, x, y, orientation)) {
                     placeShip(grid, ship, x, y, orientation);
                     isPositioned = true;
-                    System.out.println("Ship placed");
-                    System.out.println("Ship size: " + ship.getShipSize());
-                    System.out.println("Ship orientation: " + orientation);
-                    System.out.println("Ship coordinates: " + x + ", " + y);
-
-                } else {
-                    System.out.println("Can't place ship");
                 }
             }
         }
@@ -35,26 +28,26 @@ public class ShipPositioner {
         if (orientation == 0) {
             // horizontal placement
             if (x + length > gridDimension) {
-                System.out.println("Ship out of bounds");
+//                Out of bounds
                 return false;
             }
 
             for (int i = x; i < x + length; i++) {
                 if (grid.gridItems[i][y].getLinkedShip() != null) {
-                    System.out.println("Ship already placed");
+//                    Ship already placed
                     return false;
                 }
             }
         } else {
             // vertical placement
             if (y + length > gridDimension) {
-                System.out.println("Ship out of bounds");
+//                Out of bounds
                 return false;
             }
 
             for (int j = y; j < y + length; j++) {
                 if (grid.gridItems[x][j].getLinkedShip() != null) {
-                    System.out.println("Ship already placed");
+//                    Ship already placed
                     return false;
                 }
             }
@@ -67,18 +60,14 @@ public class ShipPositioner {
         int length = ship.getShipSize();
 
         if (orientation == 0) {
-            System.out.println("Horizontal placement");
             // horizontal placement
             for (int i = x; i < x + length; i++) {
                 grid.gridItems[i][y].setLinkedShip(ship);
-                System.out.println("Ship placed at " + i + ", " + y);
             }
         } else {
-            System.out.println("Vertical placement");
             // vertical placement
             for (int j = y; j < y + length; j++) {
                 grid.gridItems[x][j].setLinkedShip(ship);
-                System.out.println("Ship placed at " + x + ", " + j);
             }
         }
     }

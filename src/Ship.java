@@ -18,6 +18,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     //    cells selected by the ship
     public HashSet<GridItem> selectedCells = new HashSet<>();
     private int defaultX, defaultY, size;
+
     //    ship states
     private boolean collided = false;
     private boolean positioned = false;
@@ -29,7 +30,11 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     }
 
     public void setProperties() {
-        size = Math.round((float) this.getWidth() / 50);
+        if (this.getWidth() > this.getHeight()) {
+            size = Math.round((float) this.getWidth() / 50);
+        } else {
+            size = Math.round((float) this.getHeight() / 50);
+        }
     }
 
     public void setDefaultPosition(int x, int y) {
@@ -58,7 +63,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
         if (positioned) {
             placedCounter--;
-
+            //System.out.println("Ship already placed - moving to new position");
             for (GridItem gridItem : selectedCells) {
                 gridItem.setBorder(null);
                 gridItem.setLinkedShip(null);

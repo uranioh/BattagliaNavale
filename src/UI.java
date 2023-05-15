@@ -65,10 +65,24 @@ public class UI extends BackgroundPainter {
         }
         Globals.playerGrid.resetGridItemBorder();
 
+        for (int c = 0; c < 6; c++) {
+            int x = (Globals.enemyShips[c].getLocation().x - Globals.enemyGrid.getLocation().x);
+            int y = (Globals.enemyShips[c].getLocation().y - Globals.enemyGrid.getLocation().y);
+
+
+            remove(Globals.enemyShips[c]);
+            Globals.enemyShips[c].setBounds(x, y, Globals.enemyShips[c].getIcon().getIconWidth(), Globals.enemyShips[c].getIcon().getIconHeight());
+            Globals.enemyGrid.add(Globals.enemyShips[c]);
+
+        }
+        Globals.enemyGrid.resetGridItemBorder();
+
+
 
         for (int i = 0; i < 6; i++) {
             remove(ships_bg[i]);
         }
+
         remove(resetShips_Button);
         remove(playGame);
         remove(Globals.playerGrid);
@@ -83,12 +97,15 @@ public class UI extends BackgroundPainter {
 
         playGameTitle.setForeground(Color.WHITE);
         playGameTitle.setFont(new Font("Arial", Font.BOLD, 40));
+
         gridPanel.add(Globals.playerGrid);
         gridPanel.add(Globals.enemyGrid);
+
         Globals.playerGrid.setPreferredSize(new Dimension(
                 Globals.playerGrid.getIcon().getIconWidth(),
                 Globals.playerGrid.getIcon().getIconHeight()
         ));
+
         revalidate();
         repaint();
     }
