@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class UI extends backgroundPainter {
+public class UI extends BackgroundPainter {
     JPanel gridPanel = new JPanel();
     JLabel playGameTitle = new JLabel("In attesa dell'avversario...", JLabel.CENTER);
 
@@ -94,7 +94,7 @@ public class UI extends backgroundPainter {
     public void addPlayGameButton() {
         //playGame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         playGame.setLayout(null);
-        playGame.setBorder(new roundedBorder(200));
+        playGame.setBorder(new RoundedBorder(200));
         playGame.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5, true));
         playGame.setContentAreaFilled(false);
         playGame.setFocusPainted(false);

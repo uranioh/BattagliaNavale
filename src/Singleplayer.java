@@ -4,24 +4,20 @@ import java.util.Random;
 
 public class Singleplayer extends UI {
     Random r = new Random();
-    private Timer timer;
-
-
     int explodedCells_Player = 0;
     int explodedCells_CPU = 0;
-
     ImageIcon explosion = new ImageIcon("src/assets/explosion.png");
     ImageIcon close = new ImageIcon("src/assets/prova.png");
-
     int[][] mat;
     CPU cpu = new CPU(this);
+    private Timer timer;
 
     public Singleplayer() {
         this.playGameTitle.setText("CPU");
         printMat(Globals.enemyGrid);
     }
 
-//    controlla se dentro la matrice del player ci sta na barca nelle coordinate piazzate in input
+    //    controlla se dentro la matrice del player ci sta na barca nelle coordinate piazzate in input
     public boolean getResponseAttackPlayer(int x, int y) {
         boolean a = false;
         if (explodedCells_CPU < 18) {
@@ -128,8 +124,7 @@ public class Singleplayer extends UI {
             for (int col = 0; col < 10; col++) {
                 if (grid.gridItems[row][col].getLinkedShip() == null) {
                     System.out.print("n" + "\t");
-                }
-                else {
+                } else {
                     System.out.print(grid.gridItems[row][col].getLinkedShip().getShipSize() + "\t");
                 }
             }
