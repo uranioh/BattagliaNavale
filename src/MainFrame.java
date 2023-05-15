@@ -20,8 +20,8 @@ public class MainFrame extends JFrame {
 
     //    Background and game modes
     ImageIcon bg = new ImageIcon("src/assets/background.jpg");
-    Multiplayer multiplayerGame = new Multiplayer(this);
-    Singleplayer singleplayerGame = new Singleplayer(this);
+    Multiplayer multiplayerGame = new Multiplayer();
+    Singleplayer singleplayerGame = new Singleplayer();
 
 
     public MainFrame() {

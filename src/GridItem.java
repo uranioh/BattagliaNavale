@@ -51,7 +51,6 @@ public class GridItem extends JLabel implements MouseListener {
 
     public void sendAttack(int x, int y) {
         single.sendAttack(x, y);
-
     }
 
     public void setLinkedShip(Ship ship) {
