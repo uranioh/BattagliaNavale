@@ -3,7 +3,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class GridItem extends JLabel implements MouseListener {
-    Singleplayer single;
+    Singleplayer player;
     boolean statePlay = false;
     private int x, y;
     //    gameplay attributes
@@ -14,43 +14,33 @@ public class GridItem extends JLabel implements MouseListener {
         this.addMouseListener(this);
     }
 
-    public int getRelativeX() {
-        return this.x;
+    public void linkPlayer(Singleplayer player) {
+        this.player = player;
     }
 
+    //    Relative grid coordinates
     public void setRelativeX(int x) {
         this.x = x;
-    }
-
-    public int getRelativeY() {
-        return this.y;
     }
 
     public void setRelativeY(int y) {
         this.y = y;
     }
 
+    //    Check if the cell can be clicked or not
     public void setPlaying(boolean stateCommand) {
         statePlay = stateCommand;
-    }
-
-    public void addSingleplayer(Singleplayer single) {
-        this.single = single;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (statePlay) {
-//            System.out.println("X: " + x + " Y: " + y);
-            sendAttack(x, y);
+            player.sendAttack(x, y);
         }
 
     }
 
-    public void sendAttack(int x, int y) {
-        single.sendAttack(x, y);
-    }
-
+    //    Linked ship methods
     public Ship getLinkedShip() {
         return this.linkedShip;
     }
@@ -59,6 +49,7 @@ public class GridItem extends JLabel implements MouseListener {
         this.linkedShip = ship;
     }
 
+    //    Attack methods
     public void setAttacked() {
         isAttacked = true;
     }
@@ -67,6 +58,7 @@ public class GridItem extends JLabel implements MouseListener {
         return isAttacked;
     }
 
+    //    Useless methods
     @Override
     public void mousePressed(MouseEvent e) {
 

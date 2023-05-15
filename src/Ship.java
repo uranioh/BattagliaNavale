@@ -8,20 +8,16 @@ import java.util.HashSet;
 public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     public static int placedCounter = 0;
 
-    //    counters
-    private static int currentIDCounter = 0;
 
     //    import UI
     private final UI _ui;
 
     //    ship properties
-    private final int id;
     public boolean validPosition = false;
 
     //    cells selected by the ship
     public HashSet<GridItem> selectedCells = new HashSet<>();
     private int defaultX, defaultY, size;
-    private char orientation;
     //    ship states
     private boolean collided = false;
     private boolean positioned = false;
@@ -30,17 +26,10 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
         this._ui = ui;
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
-        this.id = currentIDCounter++;
     }
 
     public void setProperties() {
-        if (this.getWidth() > this.getHeight()) {
-            size = Math.round((float) this.getWidth() / 50);
-            orientation = 'h';
-        } else {
-            size = Math.round((float) this.getHeight() / 50);
-            orientation = 'v';
-        }
+        size = Math.round((float) this.getWidth() / 50);
     }
 
     public void setDefaultPosition(int x, int y) {
@@ -61,19 +50,15 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent e) {
         setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-        //System.out.printf("Ship %d (%d blocks, %c) pressed at: %d, %d%n", id, size, orientation, this.getX(), this.getY());
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         setCursor(Cursor.getDefaultCursor());
-//        System.out.println("posizione grid" + _ui.playerGrid.getX());
-//        //System.out.printf("Ship grid %d (%d blocks, %c) released at: %d, %d%n", id, size, orientation, (_ui.playerGrid.getX()-this.getX()+4)*-1, (_ui.playerGrid.getY()-this.getY()+4)*-1);
-//        System.out.printf("Ship  %d (%d blocks, %c) released at: %d, %d%n", id, size, orientation, this.getX(), this.getY());
 
         if (positioned) {
             placedCounter--;
-            //System.out.println("Ship already placed - moving to new position");
+
             for (GridItem gridItem : selectedCells) {
                 gridItem.setBorder(null);
                 gridItem.setLinkedShip(null);
@@ -83,7 +68,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
 
         if (validPosition && !collided) {
             placedCounter++;
-            //System.out.println("Ship placed to valid position");
+
             positioned = true;
             for (GridItem gridItem : Grid.selectedCells) {
                 gridItem.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
@@ -93,7 +78,7 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
         }
 
         if (collided || !validPosition) {
-            //System.out.println("Ship collided or placed to invalid position");
+
             this.resetPosition();
         }
 
@@ -104,7 +89,6 @@ public class Ship extends JLabel implements MouseListener, MouseMotionListener {
             }
         }
 
-        //System.out.println("Placed: " + placedCounter);
         if (placedCounter == 6) {
             _ui.addPlayButton();
         } else {
