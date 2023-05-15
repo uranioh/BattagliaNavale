@@ -56,10 +56,10 @@ public class MainFrame extends JFrame {
 
         // Creazione dei bottoni con bordi arrotondati
 
-        localeButton.setBorder(new roundedBorder(30)); // Imposta un raggio di 20 pixel per l'arrotondamento del bordo del bottone "locale"
-        onlineButton.setBorder(new roundedBorder(30)); // Imposta un raggio di 20 pixel per l'arrotondamento del bordo del bottone "online"
-        accountButton.setBorder(new roundedBorder(30)); // Imposta un raggio di 20 pixel per l'arrotondamento del bordo del bottone "account"
-        settingsButton.setBorder(new roundedBorder(30)); // Imposta un raggio di 20 pixel per l'arrotondamento del bordo del bottone "impostazioni"
+        localeButton.setBorder(new RoundedBorder(30)); // Imposta un raggio di 20 pixel per l'arrotondamento del bordo del bottone "locale"
+        onlineButton.setBorder(new RoundedBorder(30)); // Imposta un raggio di 20 pixel per l'arrotondamento del bordo del bottone "online"
+        accountButton.setBorder(new RoundedBorder(30)); // Imposta un raggio di 20 pixel per l'arrotondamento del bordo del bottone "account"
+        settingsButton.setBorder(new RoundedBorder(30)); // Imposta un raggio di 20 pixel per l'arrotondamento del bordo del bottone "impostazioni"
 
 
         localePanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));

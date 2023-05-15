@@ -1,14 +1,14 @@
 import java.util.Arrays;
 import java.util.Random;
 
-public class generateCpuMatrix {
+public class GenerateCpuMatrix {
     int gridDimension = 10;
     int[][] mat = new int[gridDimension][gridDimension];
     int[][] mat2 = new int[gridDimension][gridDimension];
 
     Random rand = new Random();
 
-    public generateCpuMatrix() {
+    public GenerateCpuMatrix() {
 
         //0 su, 1 destra, 2 giù, 3 sinistra
 

@@ -1,10 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class backgroundPainter extends JPanel {
+public class BackgroundPainter extends JPanel {
     private final Image backgroundImage;
 
-    public backgroundPainter() {
+    public BackgroundPainter() {
         // Carica l'immagine di sfondo
         backgroundImage = new ImageIcon("src/assets/background.jpg").getImage();
         setLayout(null);

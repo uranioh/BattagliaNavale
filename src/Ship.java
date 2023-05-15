@@ -6,25 +6,22 @@ import java.awt.event.MouseMotionListener;
 import java.util.HashSet;
 
 public class Ship extends JLabel implements MouseListener, MouseMotionListener {
+    public static int placedCounter = 0;
     //    counters
     private static int currentIDCounter = 0;
-    public static int placedCounter = 0;
-
     //    import UI
     private final UI _ui;
 
     //    ship properties
     private final int id;
-    private int defaultX, defaultY, size;
-    private char orientation;
-
-    //    ship states
-    private boolean collided = false;
     public boolean validPosition = false;
-    private boolean positioned = false;
-
     //    cells selected by the ship
     public HashSet<GridItem> selectedCells = new HashSet<>();
+    private int defaultX, defaultY, size;
+    private char orientation;
+    //    ship states
+    private boolean collided = false;
+    private boolean positioned = false;
 
     public Ship(UI ui) {
         this._ui = ui;

@@ -3,10 +3,10 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 
-public class roundedBorder extends AbstractBorder {
+public class RoundedBorder extends AbstractBorder {
     private final int cornerRadius; // Raggio dell'arrotondamento
 
-    public roundedBorder(int cornerRadius) {
+    public RoundedBorder(int cornerRadius) {
         this.cornerRadius = cornerRadius;
     }
 

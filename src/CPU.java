@@ -4,7 +4,7 @@ import java.util.Random;
 public class CPU {
     ImageIcon explosion = new ImageIcon("src/assets/explosion.png");
     ImageIcon close = new ImageIcon("src/assets/prova.png");
-    generateCpuMatrix generate = new generateCpuMatrix();
+    GenerateCpuMatrix generate = new GenerateCpuMatrix();
     int level;
     int[][] mat;
     Random rand = new Random();

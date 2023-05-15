@@ -4,11 +4,9 @@ import java.awt.event.MouseListener;
 
 public class GridItem extends JLabel implements MouseListener {
     Singleplayer single;
-
-    private int x, y;
     boolean statePlay = false;
-
-//    gameplay attributes
+    private int x, y;
+    //    gameplay attributes
     private Ship linkedShip = null;
     private boolean isAttacked = false;
 
@@ -16,20 +14,20 @@ public class GridItem extends JLabel implements MouseListener {
         this.addMouseListener(this);
     }
 
-    public void setRelativeX(int x) {
-        this.x = x;
-    }
-
-    public void setRelativeY(int y) {
-        this.y = y;
-    }
-
     public int getRelativeX() {
         return this.x;
     }
 
+    public void setRelativeX(int x) {
+        this.x = x;
+    }
+
     public int getRelativeY() {
         return this.y;
+    }
+
+    public void setRelativeY(int y) {
+        this.y = y;
     }
 
     public void setPlaying(boolean stateCommand) {
@@ -53,12 +51,12 @@ public class GridItem extends JLabel implements MouseListener {
         single.sendAttack(x, y);
     }
 
-    public void setLinkedShip(Ship ship) {
-        this.linkedShip = ship;
-    }
-
     public Ship getLinkedShip() {
         return this.linkedShip;
+    }
+
+    public void setLinkedShip(Ship ship) {
+        this.linkedShip = ship;
     }
 
     public void setAttacked() {
