@@ -45,53 +45,57 @@ public class UI extends BackgroundPainter {
         Globals.enemyGrid = new Grid(bg.getIconWidth() / 2 + 100, bg.getIconHeight() / 2 - 594 / 2, 594, 594);
 
         add(Globals.enemyGrid);
-        AddListenerPlayGameButton();
-
+        enablePlayButton();
     }
 
-    public void AddListenerPlayGameButton() {
+    public void enablePlayButton() {
         playGame.addActionListener(e -> {
-            for (int c = 0; c < 6; c++) {
-                int x;
-                int y;
-                x = (Globals.playerShips[c].getLocation().x - Globals.playerGrid.getLocation().x);
-                y = (Globals.playerShips[c].getLocation().y - Globals.playerGrid.getLocation().y);
-
-
-                remove(Globals.playerShips[c]);
-                Globals.playerShips[c].setBounds(x, y, Globals.playerShips[c].getIcon().getIconWidth(), Globals.playerShips[c].getIcon().getIconHeight());
-                Globals.playerGrid.add(Globals.playerShips[c]);
-
-            }
-            Globals.playerGrid.resetGridItemBorder();
-
-
-            for (int i = 0; i < 6; i++) {
-                remove(ships_bg[i]);
-            }
-            remove(resetShips_Button);
-            remove(playGame);
-            remove(Globals.playerGrid);
-            remove(Globals.enemyGrid);
-
-            setLayout(new BorderLayout());
-
-            gridPanel.setOpaque(false);
-            add(playGameTitle, BorderLayout.NORTH);
-            add(gridPanel, BorderLayout.SOUTH);
-
-
-            playGameTitle.setForeground(Color.WHITE);
-            playGameTitle.setFont(new Font("Arial", Font.BOLD, 40));
-            gridPanel.add(Globals.playerGrid);
-            gridPanel.add(Globals.enemyGrid);
-            Globals.playerGrid.setPreferredSize(new Dimension(Globals.playerGrid.getIcon().getIconWidth(), Globals.playerGrid.getIcon().getIconHeight()));
-            revalidate();
-            repaint();
+            playGame();
         });
     }
 
-    public void addPlayGameButton() {
+    public void playGame() {
+        for (int c = 0; c < 6; c++) {
+            int x = (Globals.playerShips[c].getLocation().x - Globals.playerGrid.getLocation().x);
+            int y = (Globals.playerShips[c].getLocation().y - Globals.playerGrid.getLocation().y);
+
+
+            remove(Globals.playerShips[c]);
+            Globals.playerShips[c].setBounds(x, y, Globals.playerShips[c].getIcon().getIconWidth(), Globals.playerShips[c].getIcon().getIconHeight());
+            Globals.playerGrid.add(Globals.playerShips[c]);
+
+        }
+        Globals.playerGrid.resetGridItemBorder();
+
+
+        for (int i = 0; i < 6; i++) {
+            remove(ships_bg[i]);
+        }
+        remove(resetShips_Button);
+        remove(playGame);
+        remove(Globals.playerGrid);
+        remove(Globals.enemyGrid);
+
+        setLayout(new BorderLayout());
+
+        gridPanel.setOpaque(false);
+        add(playGameTitle, BorderLayout.NORTH);
+        add(gridPanel, BorderLayout.SOUTH);
+
+
+        playGameTitle.setForeground(Color.WHITE);
+        playGameTitle.setFont(new Font("Arial", Font.BOLD, 40));
+        gridPanel.add(Globals.playerGrid);
+        gridPanel.add(Globals.enemyGrid);
+        Globals.playerGrid.setPreferredSize(new Dimension(
+                Globals.playerGrid.getIcon().getIconWidth(),
+                Globals.playerGrid.getIcon().getIconHeight()
+        ));
+        revalidate();
+        repaint();
+    }
+
+    public void addPlayButton() {
         //playGame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         playGame.setLayout(null);
         playGame.setBorder(new RoundedBorder(200));
@@ -108,31 +112,38 @@ public class UI extends BackgroundPainter {
         playGameLabelIcon.setBounds(100, 13, playGameLabelIcon.getIcon().getIconWidth(), playGameLabelIcon.getIcon().getIconHeight());
         playGame.add(playGameText);
         playGame.add(playGameLabelIcon);
-        add(playGame);
 
+        this.add(playGame);
         this.revalidate();
         this.repaint();
-
     }
 
     public void setShips() {
+//        Create ships and their background
         for (int i = 0; i < 6; i++) {
+//            Player ships
             Globals.playerShips[i] = new Ship(this);
             Globals.playerShips[i].setIcon(new ImageIcon(String.format("src/ships/%d.png", i)));
             Globals.playerShips[i].setSize(Globals.playerShips[i].getIcon().getIconWidth(), Globals.playerShips[i].getIcon().getIconHeight());
 
+//            Enemy ships
+            Globals.enemyShips[i] = new Ship(this);
+            Globals.enemyShips[i].setIcon(new ImageIcon(String.format("src/ships/%d.png", i)));
+            Globals.enemyShips[i].setSize(Globals.enemyShips[i].getIcon().getIconWidth(), Globals.enemyShips[i].getIcon().getIconHeight());
+
+//            Ships background
             ships_bg[i] = new JLabel();
             ships_bg[i].setIcon(new ImageIcon(String.format("src/ships_bg/%d.png", i)));
             ships_bg[i].setSize(ships_bg[i].getIcon().getIconWidth(), ships_bg[i].getIcon().getIconHeight());
         }
 
-//        Horizontal ships
+//        Horizontal ships bounds
         for (int i = 0; i < 3; i++) {
             Globals.playerShips[i].setDefaultPosition(100, 150 + i * 50);
             ships_bg[i].setBounds(100, 150 + i * 50, ships_bg[i].getIcon().getIconWidth(), ships_bg[i].getIcon().getIconHeight());
         }
 
-//        Vertical ships
+//        Vertical ships bounds
         for (int i = 3; i < 6; i++) {
             Globals.playerShips[i].setDefaultPosition(100 + (i - 3) * 50, 350);
             ships_bg[i].setBounds(100 + (i - 3) * 50, 350, ships_bg[i].getIcon().getIconWidth(), ships_bg[i].getIcon().getIconHeight());
@@ -141,6 +152,7 @@ public class UI extends BackgroundPainter {
         for (int i = 0; i < 6; i++) {
             add(Globals.playerShips[i]);
             Globals.playerShips[i].setProperties();
+            Globals.enemyShips[i].setProperties();
         }
         for (int i = 0; i < 6; i++) {
             add(ships_bg[i]);

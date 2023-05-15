@@ -5,22 +5,22 @@ public class CPU {
     ImageIcon explosion = new ImageIcon("src/assets/explosion.png");
     ImageIcon close = new ImageIcon("src/assets/prova.png");
     GenerateCpuMatrix generate = new GenerateCpuMatrix();
-    int level;
+    int difficulty;
     int[][] mat;
     Random rand = new Random();
-    Singleplayer single;
+    Singleplayer player;
 
-    public CPU(Singleplayer single) {
-        this.single = single;
+    public CPU(Singleplayer player) {
+        this.player = player;
         this.mat = generate.getMat();
-        level = 0;
+        difficulty = 0;
     }
 
     public void sendAttack() {
         int x, y;
         boolean status;
 
-        if (level == 0) {
+        if (difficulty == 0) {
             do {
                 status = false;
 
@@ -33,7 +33,7 @@ public class CPU {
                 }
             } while (status);
 
-            boolean response = single.getResponseAttackPlayer(x, y);
+            boolean response = player.checkAttack(x, y);
 
 
             if (response) {
@@ -46,7 +46,7 @@ public class CPU {
         }
     }
 
-    public boolean getResponseAttackCPU(int x, int y) {
+    public boolean checkAttack(int x, int y) {
         return mat[x][y] != 0;
     }
 }

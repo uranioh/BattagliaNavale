@@ -14,11 +14,12 @@ public class Singleplayer extends UI {
 
     public Singleplayer() {
         this.playGameTitle.setText("CPU");
+        ShipPositioner.positionShips(Globals.enemyGrid, Globals.enemyShips);
         printMat(Globals.enemyGrid);
     }
 
     //    controlla se dentro la matrice del player ci sta na barca nelle coordinate piazzate in input
-    public boolean getResponseAttackPlayer(int x, int y) {
+    public boolean checkAttack(int x, int y) {
         boolean a = false;
         if (explodedCells_CPU < 18) {
             if (Globals.playerGrid.gridItems[x][y].getLinkedShip() != null) {
@@ -34,45 +35,9 @@ public class Singleplayer extends UI {
     }
 
     @Override
-    public void AddListenerPlayGameButton() {
+    public void enablePlayButton() {
         playGame.addActionListener(e -> {
-            for (int c = 0; c < 6; c++) {
-                int x = 0;
-                int y = 0;
-                x = (Globals.playerShips[c].getLocation().x - Globals.playerGrid.getLocation().x);
-                y = (Globals.playerShips[c].getLocation().y - Globals.playerGrid.getLocation().y);
-
-
-                remove(Globals.playerShips[c]);
-                Globals.playerShips[c].setBounds(x, y, Globals.playerShips[c].getIcon().getIconWidth(), Globals.playerShips[c].getIcon().getIconHeight());
-                Globals.playerGrid.add(Globals.playerShips[c]);
-
-            }
-            Globals.playerGrid.resetGridItemBorder();
-
-
-            for (int i = 0; i < 6; i++) {
-                remove(ships_bg[i]);
-            }
-            remove(resetShips_Button);
-            remove(playGame);
-            remove(Globals.playerGrid);
-            remove(Globals.enemyGrid);
-
-            setLayout(new BorderLayout());
-
-            gridPanel.setOpaque(false);
-            add(playGameTitle, BorderLayout.NORTH);
-            add(gridPanel, BorderLayout.SOUTH);
-
-
-            playGameTitle.setForeground(Color.WHITE);
-            playGameTitle.setFont(new Font("Arial", Font.BOLD, 40));
-            gridPanel.add(Globals.playerGrid);
-            gridPanel.add(Globals.enemyGrid);
-            Globals.playerGrid.setPreferredSize(new Dimension(Globals.playerGrid.getIcon().getIconWidth(), Globals.playerGrid.getIcon().getIconHeight()));
-            revalidate();
-            repaint();
+            playGame();
             mat = getPlayerMat();
             printMat(Globals.playerGrid);
             setPlaying(true);
@@ -81,8 +46,9 @@ public class Singleplayer extends UI {
 
     public void sendAttack(int x, int y) {
         if (explodedCells_Player < 18) {
-            boolean response = cpu.getResponseAttackCPU(x, y);
+            boolean response = cpu.checkAttack(x, y);
             System.out.println("RISPOSTA:   " + response);
+
             if (response) {
                 Globals.enemyGrid.gridItems[x][y].setIcon(explosion);
                 explodedCells_Player++;
@@ -92,14 +58,17 @@ public class Singleplayer extends UI {
             } else {
                 Globals.enemyGrid.gridItems[x][y].setIcon(close);
             }
-            Globals.enemyGrid.gridItems[x][y].setPlaying(false);
 
 
-            Globals.enemyGrid.setGridStatus(false);
+//            Disable enemy grid
+            Globals.enemyGrid.setGridState(false);
+
+//            Fake CPU delay
             int delay = r.nextInt(1000, 5000);
             timer = new Timer(delay, e -> {
                 cpu.sendAttack();
-                Globals.enemyGrid.setGridStatus(true);
+//                Enable enemy grid
+                Globals.enemyGrid.setGridState(true);
                 timer.stop();
             });
             timer.start();
