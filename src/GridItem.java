@@ -34,6 +34,8 @@ public class GridItem extends JLabel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
+        System.out.println(linkedShip);
         if (statePlay) {
             player.sendAttack(x, y);
         }

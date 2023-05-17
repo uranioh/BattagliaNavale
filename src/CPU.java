@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.util.Random;
 
 public class CPU {
+    Timer timer;
+
+    Random r = new Random();
     ImageIcon explosion = new ImageIcon("src/assets/explosion.png");
     ImageIcon close = new ImageIcon("src/assets/prova.png");
     int difficulty;
@@ -14,6 +17,7 @@ public class CPU {
     }
 
     public void sendAttack() {
+        GridItem g;
         int x, y;
         boolean status;
 
@@ -24,8 +28,10 @@ public class CPU {
                 x = rand.nextInt(0, 10);
                 y = rand.nextInt(0, 10);
 
+                g = Globals.playerGrid.gridItems[x][y];
+
 //                Avoids to attack the same cell twice
-                if (Globals.playerGrid.gridItems[x][y].isAttacked()) {
+                if (g.isAttacked()) {
                     status = true;
                 }
 //                Repeat the cycle if the cell is already attacked
@@ -36,16 +42,26 @@ public class CPU {
 
 
             if (response) {
-                Globals.playerGrid.gridItems[x][y].setIcon(explosion);
+                g.setIcon(explosion);
+                player.checkShipDestroyed(g);
+
+                int delay = r.nextInt(1000, 5000);
+                timer = new Timer(delay, e -> {
+                    sendAttack();
+                    player.turnLabel.setText("È il tuo turno");
+                    timer.stop();
+                });
+                timer.start();
             } else {
-                Globals.playerGrid.gridItems[x][y].setIcon(close);
+                g.setIcon(close);
+                player.turnLabel.setText("È il tuo turno");
             }
 
-            Globals.playerGrid.gridItems[x][y].setAttacked();
+            g.setAttacked();
         }
     }
 
     public boolean checkAttack(int x, int y) {
-        return Globals.playerGrid.gridItems[x][y].getLinkedShip() != null;
+        return Globals.enemyGrid.gridItems[x][y].getLinkedShip() != null;
     }
 }

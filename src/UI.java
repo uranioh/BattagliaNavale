@@ -5,6 +5,8 @@ public class UI extends BackgroundPainter {
     JPanel gridPanel = new JPanel();
     JLabel playGameTitle = new JLabel("In attesa dell'avversario...", JLabel.CENTER);
 
+    JLabel turnLabel = new JLabel("È il tuo turno", JLabel.CENTER);
+
     JLabel playGameLabelIcon = new JLabel("");
     JLabel playGameText = new JLabel("Gioca");
 
@@ -39,12 +41,14 @@ public class UI extends BackgroundPainter {
 
 //        Player grid
         Globals.playerGrid = new Grid(bg.getIconWidth() / 2 - 600, bg.getIconHeight() / 2 - 594 / 2, 594, 594);
+        Globals.playerGrid.setOwner("player");
         add(Globals.playerGrid);
 
 //        Enemy grid
         Globals.enemyGrid = new Grid(bg.getIconWidth() / 2 + 100, bg.getIconHeight() / 2 - 594 / 2, 594, 594);
-
+        Globals.enemyGrid.setOwner("enemy");
         add(Globals.enemyGrid);
+
         enablePlayButton();
     }
 
@@ -92,11 +96,15 @@ public class UI extends BackgroundPainter {
 
         gridPanel.setOpaque(false);
         add(playGameTitle, BorderLayout.NORTH);
+        add(turnLabel, BorderLayout.CENTER);
         add(gridPanel, BorderLayout.SOUTH);
 
 
         playGameTitle.setForeground(Color.WHITE);
         playGameTitle.setFont(new Font("Arial", Font.BOLD, 40));
+
+        turnLabel.setForeground(Color.WHITE);
+        turnLabel.setFont(new Font("Arial", Font.BOLD, 40));
 
         gridPanel.add(Globals.playerGrid);
         gridPanel.add(Globals.enemyGrid);
