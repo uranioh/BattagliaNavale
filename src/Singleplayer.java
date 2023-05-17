@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.*;
+import java.util.HashSet;
 import java.util.Random;
 
 public class Singleplayer extends UI {
@@ -53,28 +55,60 @@ public class Singleplayer extends UI {
 
             if (response) {
                 Globals.enemyGrid.gridItems[x][y].setIcon(explosion);
+
+                GridItem g = Globals.enemyGrid.gridItems[x][y];
+                g.setAttacked();
+
+
+                checkShipDestroyed(g);
+//                System.out.println("x: " + x + " y: " + y);
+
                 explodedCells_Player++;
                 if (explodedCells_Player == 18) {
                     playGameTitle.setText("Hai vinto");
                 }
+
             } else {
+//                Section gives the turn to the CPU only if the player misses the attack
+
                 Globals.enemyGrid.gridItems[x][y].setIcon(close);
+
+                turnLabel.setText("Turno CPU");
+//                Disable enemy grid
+                Globals.enemyGrid.setGridState(false);
+
+//                Fake CPU delay
+                int delay = r.nextInt(1000, 5000);
+                timer = new Timer(delay, e -> {
+                    cpu.sendAttack();
+//                    Enable enemy grid
+                    Globals.enemyGrid.setGridState(true);
+                    timer.stop();
+                });
+                timer.start();
             }
-
-
-//            Disable enemy grid
-            Globals.enemyGrid.setGridState(false);
-
-//            Fake CPU delay
-            int delay = r.nextInt(1000, 5000);
-            timer = new Timer(delay, e -> {
-                cpu.sendAttack();
-//                Enable enemy grid
-                Globals.enemyGrid.setGridState(true);
-                timer.stop();
-            });
-            timer.start();
         }
+
+    }
+
+    public void checkShipDestroyed(GridItem g) {
+        Ship ship = g.getLinkedShip();
+
+        for (GridItem sel : ship.selectedCells) {
+            if (!sel.isAttacked()) {
+                System.out.println("Nave non distrutta");
+                return;
+            }
+        }
+
+        for (GridItem sel : ship.selectedCells) {
+            sel.setBackground(new Color(255, 0, 0, 128));
+            sel.setOpaque(true);
+            sel.repaint();
+//            sel.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            System.out.println("Nave distrutta");
+        }
+
 
     }
 

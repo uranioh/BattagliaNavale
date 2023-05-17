@@ -9,6 +9,7 @@ public class Grid extends JLabel {
     ImageIcon gridBackground = new ImageIcon("src/assets/grid.png");
     GridItem[][] gridItems = new GridItem[10][10];
 
+    private String owner;
 
     public Grid(int posX, int posY, int width, int height) {
         int gapSize = 4;
@@ -85,5 +86,13 @@ public class Grid extends JLabel {
                 gridItems[row][col].setPlaying(t);
             }
         }
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

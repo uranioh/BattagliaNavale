@@ -63,11 +63,13 @@ public class ShipPositioner {
             // horizontal placement
             for (int i = x; i < x + length; i++) {
                 grid.gridItems[i][y].setLinkedShip(ship);
+                ship.selectedCells.add(grid.gridItems[i][y]);
             }
         } else {
             // vertical placement
             for (int j = y; j < y + length; j++) {
                 grid.gridItems[x][j].setLinkedShip(ship);
+                ship.selectedCells.add(grid.gridItems[x][j]);
             }
         }
     }
